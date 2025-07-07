@@ -1,0 +1,25 @@
+{
+  "name": "vite-simple-bootstrap",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "npm run build"
+  },
+  "keywords": [],
+  "author": "ferrylinton",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "ejs": "^3.1.10",
+    "glob": "^11.0.3",
+    "sass": "^1.89.2",
+    "vite": "^7.0.2",
+    "vite-plugin-virtual-mpa": "^1.12.1"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.7"
+  }
+}

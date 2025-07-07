@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap w/ Vite</title>
+  </head>
+  <body>
+    <div class="container py-4 px-3 mx-auto">
+      <h1>Hello worldxxx</h1>
+
+      <!-- variable declaration -->
+      <% var users = [{name: 'Jose'}, {name: 'Pedro'}]; %>
+
+      <!-- variable and partial usage -->
+      <ul>
+        <% users.forEach(function(user){ %>
+          <%- include ('partials/user', {user: user}); %>
+        <% }); %>
+      </ul>
+      <button class="btn btn-primary">Primary button</button>
+    </div>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>
