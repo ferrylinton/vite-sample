@@ -15,8 +15,7 @@
     "ejs": "^3.1.10",
     "glob": "^11.0.3",
     "sass": "^1.89.2",
-    "vite": "^7.0.2",
-    "vite-plugin-virtual-mpa": "^1.12.1"
+    "vite": "^7.0.2"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
