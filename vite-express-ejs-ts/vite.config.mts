@@ -1,11 +1,12 @@
-import { defineConfig } from 'vite';
-import { builderPlugin } from './builder-plugin';
+import { defineConfig } from "vite";
+import { ejsBuilder } from "./ejs-builder-plugin";
 
-export default defineConfig((config) => {
 
-    return {
-        plugins: [
-            builderPlugin(),
-        ],
-    }
-})
+export default defineConfig({
+    server: {
+        port: 3000
+    },
+    plugins: [
+        ejsBuilder({})
+    ]
+});

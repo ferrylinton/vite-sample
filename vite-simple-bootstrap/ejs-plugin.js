@@ -1,5 +1,4 @@
 import { readFile } from "node:fs/promises";
-import fs from 'fs-extra';
 import childProcess from 'child_process';
 const ejs = require('ejs');
 const { resolve } = require("node:path");
@@ -19,17 +18,17 @@ const ejsPlugin = () => {
                 }).toString();
             },
         },
-        generateBundle(outputOptions, bundle) {
-            console.log('generateBundle...');
-            for (const [fileName, bundleValue] of Object.entries(bundle)) {
-                console.log(fileName);
-                console.log(bundleValue);
-                if (fileName.endsWith('index.js')) {
-                    // ... logic to generate localized versions
-                }
-            }
+        // generateBundle(outputOptions, bundle) {
+        //     console.log('generateBundle...');
+        //     for (const [fileName, bundleValue] of Object.entries(bundle)) {
+        //         console.log(fileName);
+        //         console.log(bundleValue);
+        //         if (fileName.endsWith('index.js')) {
+        //             // ... logic to generate localized versions
+        //         }
+        //     }
             
-        }
+        // }
     }
 
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/assets/css/main.css" />
+    <link rel="stylesheet" crossorigin href="/assets/css/main.css">
 </head>
 
 <body>
@@ -16,14 +16,14 @@
         <%- include('partials/sidebar'); -%>
 
 
-            <!-- Main content -->
-            <div class="flex flex-col flex-1 overflow-y-auto">
-                <%- include('partials/navbar'); -%>
-                    <div class="p-4">
-                        <h1 class="text-2xl font-bold">Welcome to my dashboard!</h1>
-                        <p class="mt-2 text-gray-600">This is an example dashboard using Tailwind CSS.</p>
-                    </div>
+        <!-- Main content -->
+        <div class="flex flex-col flex-1 overflow-y-auto">
+            <%- include('partials/navbar'); -%>
+            <div class="p-4">
+                <h1 class="text-2xl font-bold">About</h1>
+             
             </div>
+        </div>
     </div>
 
     <script type="module" src="/assets/js/main.js"></script>
