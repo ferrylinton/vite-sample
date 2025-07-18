@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" crossorigin href="/assets/css/main.css">
+</head>
+
+<body>
+
+    <div class="flex h-screen bg-gray-100">
+
+        <!-- Mobile menu toggle button -->
+        <input type="checkbox" id="menu-toggle" class="hidden peer">
+        <%- include('partials/sidebar'); -%>
+
+
+        <!-- Main content -->
+        <div class="flex flex-col flex-1 overflow-y-auto">
+            <%- include('partials/navbar'); -%>
+            <div class="p-4">
+                <h1 class="text-2xl font-bold">About</h1>
+             
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/assets/js/main.js"></script>
+</body>
+
+</html>
