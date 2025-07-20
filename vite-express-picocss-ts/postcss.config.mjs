@@ -11,7 +11,8 @@ export default {
       content: ['./src/views/**/*.ejs'],
       fontFace: true,
       keyframes: true,
-      variables: true
+      variables: true,
+      safelist: [/data-theme$/]
     }),
   ]
 }

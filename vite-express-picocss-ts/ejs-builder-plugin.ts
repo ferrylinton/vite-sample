@@ -6,7 +6,6 @@ import { build, PluginOption } from "vite";
 import { viteNodeApp as app } from './src/app';
 
 const ejsFiles = sync("./src/views/**/*.ejs".replace(/\\/g, "/"));
-const ENTRY_NONE = "____.html";
 const DIST_FOLDER = 'dist';
 
 
@@ -29,29 +28,6 @@ async function copyEjsFiles(bundle: OutputBundle) {
 
         fse.outputFileSync(file, content, 'utf-8');
     }
-}
-
-async function buildFrontend() {
-    await build({
-        build: {
-            copyPublicDir: false,
-            emptyOutDir: false,
-            write: true,
-            outDir: DIST_FOLDER,
-            ssr: false,
-            rollupOptions: {
-                input: [
-                    './src/assets/js/main.js',
-                    './src/assets/css/main.css'
-                ],
-                output: {
-                    chunkFileNames: `assets/js/[name]-[hash].js`,
-                    entryFileNames: `assets/js/[name]-[hash].js`,
-                    assetFileNames: `assets/css/[name]-[hash].css`,
-                },
-            },
-        }
-    });
 }
 
 async function buildBackend() {
@@ -87,30 +63,7 @@ export const ejsBuilder = (): PluginOption => {
             enforce: "pre",
             apply: "build",
             config: () => {
-                if (process.env.IS_BUILDER) return {};
-                return {
-                    build: {
-                        copyPublicDir: false,
-                        write: false,
-                        rollupOptions: {
-                            input: {
-                                main: ENTRY_NONE,
-                            },
-                        },
-                    },
-                };
-            },
-            resolveId: (id) => {
-                if (id === ENTRY_NONE) {
-                    return id;
-                }
-                return null;
-            },
-            load: (id) => {
-                if (id === ENTRY_NONE) {
-                    return "";
-                }
-                return null;
+                if (process.env.IS_BUILDER) return {};  
             },
         },
         {
@@ -118,24 +71,18 @@ export const ejsBuilder = (): PluginOption => {
             enforce: "pre",
             apply: "serve",
             async configureServer(server) {
-                console.log('....configureServer:serve');
                 server.middlewares.use(app);
             }
-
         },
         {
             name: 'ejs-builder-plugin:build',
             enforce: "pre",
             apply: "build",
             buildStart: async () => {
-                console.log('buildStart....');
-
                 if (process.env.IS_BUILDER) return;
                 process.env.IS_BUILDER = "true";
 
-
                 await buildBackend();
-                await buildFrontend();
 
                 fse.copySync('src/favicon.ico', `${DIST_FOLDER}/favicon.ico`);
                 fse.copySync('src/assets/image', `${DIST_FOLDER}/assets/image`);
