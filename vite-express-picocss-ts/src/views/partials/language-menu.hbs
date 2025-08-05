@@ -1,0 +1,18 @@
+<div class="dropdown">
+    <input type="checkbox" id="dropdown-trigger-input">
+    <label class="dropdown-trigger" for="dropdown-trigger-input">
+        <img src="/assets/image/{{locale}}.png" />
+        <span>{{#if (eq locale "en")}} English {{else}} Indonesia {{/if}}</span>
+        <span class="arrow">&#10095;</span>
+    </label>
+    <ul class="dropdown-content" id="dropdown-content">
+        <li>
+            <a href="?lang=id" class="{{#if (eq locale " id")}}selected{{/if}}"><img
+                    src="/assets/image/id.png" /><span>Indonesia</span></a>
+        </li>
+        <li>
+            <a href="?lang=en" class="{{#if (eq locale " en")}}selected{{/if}}"><img
+                    src="/assets/image/en.png" /><span>English</span></a>
+        </li>
+    </ul>
+</div>

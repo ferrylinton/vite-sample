@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html translate="no" lang="en">
+
+<head>
+  <%- include('../partials/meta'); -%>
+  <title>Preview • Pico CSS</title> 
+</head>
+
+<body>
+  <%- include('../partials/sidebar'); %>
+    <main>
+      <div class="pico todoes">
+        <header>
+          <h2 class="text-center">TODO</h2>
+        </header>
+        <table class="list">
+          <tbody>
+            <% todoes.forEach((todo, index)=> { %>
+              <tr>
+                <td>
+                  <input type="checkbox" name="english" checked />
+                </td>
+                <td>
+                  <%= index + 1 %>
+                </td>
+                <td>
+                  <%= todo.task %>
+                </td>
+                <td>
+                  <div class="flex justify-center items-center gap-2">
+                    <a href="/todoes/detail/<%= todo.id %>" role="button" class="ghost secondary small"><%- include('../icons/eye-icon') -%></a>
+                  </div>
+                </td>
+              </tr>
+              <% }); %>
+          </tbody>
+        </table>
+        <footer>
+          <a href="/todoes/create" role="button" class="primary icon">
+            <%- include('../icons/plus-icon'); -%>
+              <span>Add</span>
+          </a>
+        </footer>
+      </div>
+
+    </main>
+
+    <script type="module" src="./src/assets/js/main.ts?t=<%= new Date().getTime() %>"></script>
+</body>
+
+</html>

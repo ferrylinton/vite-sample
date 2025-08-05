@@ -1,7 +1,7 @@
 @import "/node_modules/beercss/src/cdn/settings/globals.css";
 @import "/node_modules/beercss/src/cdn/settings/light.css";
 @import "/node_modules/beercss/src/cdn/settings/dark.css";
-/* @import "/node_modules/beercss/src/cdn/settings/fonts.css"; */
+@import "/node_modules/beercss/src/cdn/settings/fonts.css";
 @import "/node_modules/beercss/src/cdn/helpers/reset.css";
 @import "/node_modules/beercss/src/cdn/helpers/theme.css";
 @import "/node_modules/beercss/src/cdn/helpers/alignments.css";
@@ -50,3 +50,4 @@
 @import "/node_modules/beercss/src/cdn/elements/tables.css";
 @import "/node_modules/beercss/src/cdn/elements/tabs.css";
 @import "/node_modules/beercss/src/cdn/elements/tooltips.css";
+

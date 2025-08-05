@@ -1,43 +1,75 @@
+import chokidar from 'chokidar';
 import { execa } from 'execa';
 import fse from 'fs-extra';
 import { sync } from "glob";
+import path from "path";
 import { OutputBundle } from "rollup";
-import { build, PluginOption } from "vite";
-import { viteNodeApp as app } from './src/app';
+import { nodeExternals } from 'rollup-plugin-node-externals';
+import { build, PluginOption, ResolvedConfig, ViteDevServer } from "vite";
+import { format } from 'date-fns';
+import { Request, Response, NextFunction } from 'express';
 
-const ejsFiles = sync("./src/views/**/*.ejs".replace(/\\/g, "/"));
-const DIST_FOLDER = 'dist';
+async function reloadPage(server: ViteDevServer) {
+    console.log(`>>> ejs-builder-plugin :: reload page at ${format(new Date(), 'yyyy/MM/dd HH:mm:ss SSS')}`);
+    await execa`postcss ./src/assets/css/main.css -o ./dist/main.css`;
+    server.ws.send({ type: 'full-reload', path: '*' });
+}
 
+async function watchCssFiles(server: ViteDevServer, config: ResolvedConfig) {
+    chokidar
+        .watch(['./src/assets/css', './src/views'], {
+            usePolling: true,
+            cwd: config.root, // Define project root path
+            ignoreInitial: true, // Don't trigger chokidar on instantiation.
+        })
+        .on('ready', () => reloadPage(server))
+        .on('add', () => reloadPage(server)) // Add listeners to add, modify, delete.
+        .on('change', () => reloadPage(server))
+        .on('unlink', () => reloadPage(server));
+}
 
-async function copyEjsFiles(bundle: OutputBundle) {
+async function copyEjsFiles(bundle: OutputBundle, outDir: string) {
+    const ejsFiles = sync("./src/views/**/*.ejs".replace(/\\/g, "/"));
+    const regex = /<script.*(\/script>)/gs;
+
     for (let i = 0; i < ejsFiles.length; i++) {
-        let file = ejsFiles[i].replace('src', DIST_FOLDER);
+        let file = ejsFiles[i].replace('src', outDir);
         let content = fse.readFileSync(ejsFiles[i], 'utf-8');
 
-        Object.entries(bundle).forEach(([key, value]) => {
-            let searchValue = '';
+        if (file.includes('partials') || file.includes('icons')) {
+            fse.outputFileSync(file, content, 'utf-8');
+        } else if (content.includes('</head>') || content.includes('</script>')) {
+            Object.keys(bundle)
+                .filter(key => key.endsWith('.css'))
+                .forEach(key => {
+                    content = content.replace('</head>', `<link rel="stylesheet" href="/${key}" />\n\t</head>`)
+                });
+            Object.keys(bundle)
+                .filter(key => key.endsWith('.js'))
+                .forEach(key => {
+                    content = content.replace(regex, `<script src="/${key}"></script>`);
+                });
 
-            if (key.endsWith('.js')) {
-                searchValue = `assets/js/${value.name}.js`;
-            } else if (key.endsWith('.css')) {
-                searchValue = `assets/css/${(value as any).names[0]}`;
-            }
-
-            content = content.replace(searchValue, key);
-        });
-
-        fse.outputFileSync(file, content, 'utf-8');
+            fse.outputFileSync(file, content, 'utf-8');
+        } else {
+            fse.outputFileSync(file, content, 'utf-8');
+        }
     }
 }
 
-async function buildBackend() {
+async function buildBackend(outDir: string) {
     await build({
+        resolve: {
+            alias: {
+                '@': path.resolve(import.meta.dirname, 'src')
+            },
+        },
         ssr: {
             external: [],
             noExternal: [],
         },
         build: {
-            outDir: DIST_FOLDER,
+            outDir,
             ssr: './src/server.ts',
             write: true,
             minify: false,
@@ -52,49 +84,99 @@ async function buildBackend() {
                 },
             },
         },
+        plugins: [nodeExternals()]
     });
 }
 
 export const ejsBuilder = (): PluginOption => {
 
+    let config: ResolvedConfig;
+
     return [
-        {
-            name: "ejs-builder-plugin:skip",
-            enforce: "pre",
-            apply: "build",
-            config: () => {
-                if (process.env.IS_BUILDER) return {};  
-            },
-        },
+        //  {
+        //     name: "ejs-builder-plugin:skip",
+        //     enforce: "pre",
+        //     apply: "build",
+        //     config: () => {
+        //         if (process.env.STOP_BUILDING) return {};  
+        //     },
+        // },
         {
             name: "ejs-builder-plugin:serve",
             enforce: "pre",
             apply: "serve",
+
+            async configResolved(_config) {
+                config = _config;
+            },
+
             async configureServer(server) {
-                server.middlewares.use(app);
+
+                //watchCssFiles(server, config);
+
+                // server.middlewares.use(async (req, res, next) => {
+                //     const filePath = `./src/assets/css/main.css`;
+
+                //     if (req.url?.endsWith('.css') && fse.existsSync(filePath)) {
+                //         const fileContent = fse.readFileSync('./dist/main.css', 'utf8');
+                //         res.writeHead(200, {
+                //             'Content-Type': 'text/css'
+                //         });
+                //         res.end(fileContent);
+                //     } else {
+                //         return next();
+                //     }
+
+                // });
+
+                server.middlewares.use(async (req, res, next) => {
+
+                    if (req.url === '/@vite/client' || req.url?.endsWith('.html') || req.url?.includes('.ts') || req.url?.includes('.mjs')) {
+                        next();
+                    } else {
+                        try {
+                            const source = await server.ssrLoadModule('./src/app.ts');
+                            return await source.app(req, res, next);
+                        } catch (error) {
+                            if (typeof error === 'object' && error instanceof Error) {
+                                server.ssrFixStacktrace(error);
+                            }
+                            next(error);
+                        }
+                    }
+
+                });
             }
         },
         {
             name: 'ejs-builder-plugin:build',
             enforce: "pre",
             apply: "build",
+
+            configResolved(_config) {
+                config = _config;
+            },
+
             buildStart: async () => {
-                if (process.env.IS_BUILDER) return;
-                process.env.IS_BUILDER = "true";
+                if (process.env.STOP_BUILDING) return;
+                process.env.STOP_BUILDING = "true";
 
-                await buildBackend();
+                await buildBackend(config.build.outDir);
 
-                fse.copySync('src/favicon.ico', `${DIST_FOLDER}/favicon.ico`);
-                fse.copySync('src/assets/image', `${DIST_FOLDER}/assets/image`);
+                fse.copySync('.env', `${config.build.outDir}/.env`);
+                fse.copySync('src/favicon.ico', `${config.build.outDir}/favicon.ico`);
+                fse.copySync('src/assets/image', `${config.build.outDir}/assets/image`);
+                fse.copySync('src/locales', `${config.build.outDir}/locales`);
 
-                fse.copySync('package.json', `${DIST_FOLDER}/package.json`);
-                await execa({ cwd: DIST_FOLDER })`npm pkg delete devDependencies`;
-                await execa({ cwd: DIST_FOLDER })`npm pkg set type=commonjs`;
+                fse.copySync('package.json', `${config.build.outDir}/package.json`);
+                await execa({ cwd: config.build.outDir })`npm pkg delete devDependencies`;
+                await execa({ cwd: config.build.outDir })`npm pkg set type=commonjs`;
             },
 
             async writeBundle(__options, bundle) {
-                copyEjsFiles(bundle);
+                copyEjsFiles(bundle, config.build.outDir);
             },
+
         }
     ]
 

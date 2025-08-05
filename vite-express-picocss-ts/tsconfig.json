@@ -1,7 +1,10 @@
 {
     "compilerOptions": {
-        "target": "es2016", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-        "module": "es2022", /* Specify what module code is generated. */
+        "lib": [
+            "ES2022", "DOM"
+        ],
+        "target": "ES2022",
+        "module": "ES2022",
         "moduleResolution": "node",
         "sourceMap": true, /* Create source map files for emitted JavaScript files. */
         "outDir": "./build", /* Specify an output folder for all emitted files. */
@@ -19,6 +22,6 @@
         }
     },
     "include": [
-        "src/**/*"
+        "src"
     ]
 }
