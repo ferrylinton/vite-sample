@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html translate="no" lang="en">
+
+<head>
+  <%- include('./partials/meta'); -%>
+    <title>Preview • Pico CSS</title>
+    <link rel="stylesheet" href="/assets/css/main.css" />
+</head>
+
+<body>
+  <%- include('./partials/sidebar'); -%>
+    <main>
+      <div class="pico todoes">
+        <header>
+          <h2 class="text-center">TODO</h2>
+        </header>
+        <table class="striped">
+          <tbody>
+            <% todoes.forEach((todo)=> { %>
+              <tr>
+                <td>
+                  <%= todo.task %>
+                </td>
+                <td>
+                  <div class="flex justify-center items-center gap-2">
+                    <button class="ghost secondary small"><%- include('./partials/edit-icon') -%></button>
+                    <button class="ghost secondary small"><%- include('./partials/eye-icon') -%></button>
+                  </div>
+                </td>
+              </tr>
+              <% }); %>
+          </tbody>
+        </table>
+        <footer>
+          <button type="button" class="primary icon">
+            <%- include('./partials/plus-icon'); -%>
+              <span>Add</span>
+          </button>
+        </footer>
+      </div>
+
+    </main>
+
+    <script type="module" src="/assets/js/main.js"></script>
+</body>
+
+</html>

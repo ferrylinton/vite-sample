@@ -1,32 +1,11 @@
-import chokidar from 'chokidar';
 import { execa } from 'execa';
 import fse from 'fs-extra';
 import { sync } from "glob";
 import path from "path";
 import { OutputBundle } from "rollup";
 import { nodeExternals } from 'rollup-plugin-node-externals';
-import { build, PluginOption, ResolvedConfig, ViteDevServer } from "vite";
-import { format } from 'date-fns';
-import { Request, Response, NextFunction } from 'express';
+import { build, PluginOption, ResolvedConfig } from "vite";
 
-async function reloadPage(server: ViteDevServer) {
-    console.log(`>>> ejs-builder-plugin :: reload page at ${format(new Date(), 'yyyy/MM/dd HH:mm:ss SSS')}`);
-    await execa`postcss ./src/assets/css/main.css -o ./dist/main.css`;
-    server.ws.send({ type: 'full-reload', path: '*' });
-}
-
-async function watchCssFiles(server: ViteDevServer, config: ResolvedConfig) {
-    chokidar
-        .watch(['./src/assets/css', './src/views'], {
-            usePolling: true,
-            cwd: config.root, // Define project root path
-            ignoreInitial: true, // Don't trigger chokidar on instantiation.
-        })
-        .on('ready', () => reloadPage(server))
-        .on('add', () => reloadPage(server)) // Add listeners to add, modify, delete.
-        .on('change', () => reloadPage(server))
-        .on('unlink', () => reloadPage(server));
-}
 
 async function copyEjsFiles(bundle: OutputBundle, outDir: string) {
     const ejsFiles = sync("./src/views/**/*.ejs".replace(/\\/g, "/"));
@@ -93,45 +72,16 @@ export const ejsBuilder = (): PluginOption => {
     let config: ResolvedConfig;
 
     return [
-        //  {
-        //     name: "ejs-builder-plugin:skip",
-        //     enforce: "pre",
-        //     apply: "build",
-        //     config: () => {
-        //         if (process.env.STOP_BUILDING) return {};  
-        //     },
-        // },
         {
             name: "ejs-builder-plugin:serve",
             enforce: "pre",
             apply: "serve",
 
-            async configResolved(_config) {
-                config = _config;
-            },
-
             async configureServer(server) {
-
-                //watchCssFiles(server, config);
-
-                // server.middlewares.use(async (req, res, next) => {
-                //     const filePath = `./src/assets/css/main.css`;
-
-                //     if (req.url?.endsWith('.css') && fse.existsSync(filePath)) {
-                //         const fileContent = fse.readFileSync('./dist/main.css', 'utf8');
-                //         res.writeHead(200, {
-                //             'Content-Type': 'text/css'
-                //         });
-                //         res.end(fileContent);
-                //     } else {
-                //         return next();
-                //     }
-
-                // });
 
                 server.middlewares.use(async (req, res, next) => {
 
-                    if (req.url === '/@vite/client' || req.url?.endsWith('.html') || req.url?.includes('.ts') || req.url?.includes('.mjs')) {
+                    if (req.url === '/@vite/client' || req.url?.endsWith('.html') || req.url?.includes('node_modules') || req.url?.includes('.ts') || req.url?.includes('.mjs')) {
                         next();
                     } else {
                         try {

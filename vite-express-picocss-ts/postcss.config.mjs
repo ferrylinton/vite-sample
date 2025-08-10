@@ -28,7 +28,7 @@ export default {
       keyframes: true,
       variables: true,
       safelist: [
-        /data-theme$/, ':hover', ':focus', 'button', ':where', ':is'
+        /data-theme$/, ':hover', ':focus', 'button', ':where', ':is', /is-active$/, /dialog$/
       ],
 
     }),

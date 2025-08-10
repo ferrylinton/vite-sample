@@ -2,50 +2,72 @@
 <html translate="no" lang="en">
 
 <head>
-  <%- include('../partials/meta'); -%>
-  <title>Preview • Pico CSS</title> 
+  <%- include('../partials/meta'); %>
+    <title>Preview • Pico CSS</title>
 </head>
 
 <body>
+  <div class="overlay"></div>
   <%- include('../partials/sidebar'); %>
     <main>
-      <div class="pico todoes">
-        <header>
-          <h2 class="text-center">TODO</h2>
-        </header>
-        <table class="list">
-          <tbody>
-            <% todoes.forEach((todo, index)=> { %>
-              <tr>
+      <div class="todoes">
+
+        <section class="flex justify-center mt-4 mb-8">
+          <h2 class="title">
+            <%- include('../icons/tasks-icon'); %>
+              <span>LIST</span>
+          </h2>
+        </section>
+
+        <% if (todoes.length> 0 ) {%>
+          <section class="pico">
+            <table class="striped list">
+              <tbody>
+                <% todoes.forEach((todo, index)=> { %>
+                  <tr data-done="<%= todo.done %>"">
                 <td>
-                  <input type="checkbox" name="english" checked />
-                </td>
-                <td>
-                  <%= index + 1 %>
-                </td>
-                <td>
-                  <%= todo.task %>
-                </td>
-                <td>
-                  <div class="flex justify-center items-center gap-2">
-                    <a href="/todoes/detail/<%= todo.id %>" role="button" class="ghost secondary small"><%- include('../icons/eye-icon') -%></a>
-                  </div>
-                </td>
-              </tr>
-              <% }); %>
-          </tbody>
-        </table>
-        <footer>
-          <a href="/todoes/create" role="button" class="primary icon">
-            <%- include('../icons/plus-icon'); -%>
-              <span>Add</span>
-          </a>
-        </footer>
+                  <input type="checkbox" value="<%= todo.id %>" <%=todo.done ? 'checked' : '' %> />
+                    </td>
+                    <td>
+                      <%= index + 1 %>
+                    </td>
+                    <td>
+                      <%= todo.task %>
+                    </td>
+                    <td>
+                      <div class="flex justify-center items-center gap-2">
+                        <a href="/todoes/update/<%= todo.id %>" role="button" class="ghost secondary small">
+                          <%- include('../icons/update-icon') -%>
+                        </a>
+                        <a href="/todoes/detail/<%= todo.id %>" role="button" class="ghost secondary small">
+                          <%- include('../icons/eye-icon') -%>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                  <% }); %>
+              </tbody>
+            </table>
+          </section>
+          <% } else { %>
+
+            <div class="empty-data">
+              <%- include('../icons/empty-icon'); -%>
+                <h5>No task is found</h5>
+            </div>
+
+            <% } %>
+              <section class="pico">
+                <a href="/todoes/create" role="button" class="primary icon">
+                  <%- include('../icons/plus-icon'); -%>
+                    <span>Add</span>
+                </a>
+              </section>
       </div>
 
     </main>
-
-    <script type="module" src="./src/assets/js/main.ts?t=<%= new Date().getTime() %>"></script>
+    <%- include('../partials/confirm', {message: 'Update data?' }); %>
+      <script type="module" src="/src/assets/js/main.ts?t=<%= new Date().getTime() %>"></script>
 </body>
 
 </html>

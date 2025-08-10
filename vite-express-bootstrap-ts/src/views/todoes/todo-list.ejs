@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html translate="no" lang="en">
+
+<head>
+  <%- include('../partials/meta'); %>
+    <title>ExpressJS, EJS, Bootstrap</title>
+</head>
+
+<body>
+  <div class="overlay"></div>
+  <%- include('../partials/sidebar'); %>
+    <main>
+      <div class="todoes">
+
+        <section class="d-flex justify-content-center align-items-end gap-2 mt-2 mb-4">
+          <h2 class="title">
+            <%- include('../icons/tasks-icon'); %>
+              <span>LIST</span>
+          </h2>
+        </section>
+
+        <% if (todoes.length> 0 ) {%>
+
+          <table class="table table-striped border list">
+            <tbody>
+              <% todoes.forEach((todo, index)=> { %>
+                <tr data-done="<%= todo.done %>"">
+                <td class="align-middle">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="<%= todo.id %>" value="<%= todo.id %>" <%=todo.done ? 'checked' : '' %> />
+                    <label class="form-check-label" for="<%= todo.id %>"></label>
+                  </div>
+                  </td>
+                  <td class="align-middle">
+                    <%= index + 1 %>
+                  </td>
+                  <td class="align-middle">
+                    <%= todo.task %>
+                  </td>
+                  <td>
+                    <div class="d-flex gap-2">
+                      <a href="/todoes/update/<%= todo.id %>" role="button" class="btn btn-outline-secondary border-0 btn-icon">
+                        <%- include('../icons/update-icon') -%>
+                      </a>
+                      <a href="/todoes/detail/<%= todo.id %>" role="button" class="btn btn-outline-secondary border-0 btn-icon">
+                        <%- include('../icons/eye-icon') -%>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+                <% }); %>
+            </tbody>
+          </table>
+
+          <% } else { %>
+
+            <div class="empty-data">
+              <%- include('../icons/empty-icon'); -%>
+                <h5>No task is found</h5>
+            </div>
+
+            <% } %>
+              <section>
+                <a href="/todoes/create" role="button" class="btn btn-primary btn-lg d-block">
+                  <%- include('../icons/plus-icon'); -%>
+                    <span>Add</span>
+                </a>
+              </section>
+      </div>
+
+    </main>
+    <%- include('../partials/confirm', {message: 'Update data?' }); %>
+      <script type="module" src="/src/assets/js/main.ts?t=<%= new Date().getTime() %>"></script>
+</body>
+
+</html>

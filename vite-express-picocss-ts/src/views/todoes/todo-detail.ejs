@@ -4,35 +4,67 @@
 <head>
   <%- include('../partials/meta'); -%>
     <title>Preview • Pico CSS</title>
-    <link rel="stylesheet" href="/assets/css/main.css" />
 </head>
 
 <body>
   <%- include('../partials/sidebar'); -%>
     <main>
       <div class="pico todoes">
-        <header>
-          <h2 class="text-center">TODO</h2>
-        </header>
-        <table class="striped">
+        <section class="flex justify-center mt-4 mb-8">
+          <h2 class="title">
+            <%- include('../icons/tasks-icon'); %>
+              <span>Detail</span>
+          </h2>
+        </section>
+        <table class="striped detail">
           <tbody>
             <tr>
+              <th>ID</th>
+              <td>
+                <%= todo.id %>
+              </td>
+            </tr>
+            <tr>
               <th>Task</th>
-              <td><%= todo.task %></td>
+              <td>
+                <%= todo.task %>
+              </td>
+            </tr>
+            <tr>
+              <th>Done</th>
+              <td>
+                <%= todo.done ? 'Yes' : 'No' %>
+              </td>
+            </tr>
+            <tr>
+              <th>Created At</th>
+              <td data-convertToDate>
+                <%= todo.createdAt %>
+              </td>
+            </tr>
+            <tr>
+              <th>Updated At</th>
+              <td data-convertToDate>
+                <%= todo.updatedAt %>
+              </td>
             </tr>
           </tbody>
         </table>
-        <footer>
-          <a href="/" role="button" class="secondary icon">
+        <div class="flex gap-2">
+          <a href="/" role="button" class="w-full mb-4 secondary icon">
             <%- include('../icons/previous-icon'); -%>
               <span>Back</span>
           </a>
-        </footer>
+          <button type="button" class="w-full outline contrast icon" data-delete="<%= todo.id %>">
+            <%- include('../icons/delete-icon'); -%>
+              <span>Delete</span>
+          </button>
+        </div>
       </div>
 
     </main>
-
-    <script type="module" src="/assets/js/main.js"></script>
+    <%- include('../partials/confirm', {message: 'Delete data?'}); %>
+    <script type="module" src="/src/assets/js/main.ts?t=<%= new Date().getTime() %>"></script>
 </body>
 
 </html>

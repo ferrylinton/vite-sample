@@ -4,24 +4,29 @@
 <head>
     <%- include('../partials/meta'); -%>
         <title>Preview • Pico CSS</title>
-        <link rel="stylesheet" href="/assets/css/main.css" />
 </head>
 
 <body>
     <%- include('../partials/sidebar'); -%>
         <main>
-            <div class="pico todoes">
-                <h1>Create Todo</h1>
-                <form method="post" action="/todoes/create" autocomplete="off">
-                    <input type="text" name="task" placeholder="Task" aria-label="Task">
-                    <div>
-                        <a href="/" role="button" class="secondary icon">
+            <div class="todoes">
+                <section class="flex justify-center mt-4 mb-8">
+                    <h2 class="title">
+                        <%- include('../icons/tasks-icon'); %>
+                            <span>Create</span>
+                    </h2>
+                </section>
+                <form class="pico" method="post" action="/todoes/create" autocomplete="off">
+                    <label for="task">Task</label>
+                    <input type="text" id="task" name="task" placeholder="Task" aria-label="Task">
+                    <div class="flex gap-2">
+                        <a href="/" role="button" class="w-full mb-4 secondary icon">
                             <%- include('../icons/previous-icon'); -%>
-                            <span>Back</span>
+                                <span>Back</span>
                         </a>
                         <button type="submit" class="primary icon">
                             <%- include('../icons/plus-icon'); -%>
-                            <span>Create</span>
+                                <span>Create</span>
                         </button>
                     </div>
 
@@ -30,7 +35,7 @@
 
         </main>
 
-        <script type="module" src="/assets/js/main.js"></script>
+        <script type="module" src="/src/assets/js/main.ts?t=<%= new Date().getTime() %>"></script>
 </body>
 
 </html>

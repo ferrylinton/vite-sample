@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html translate="no" lang="en">
+
+<head>
+    <%- include('../partials/meta'); -%>
+        <title>Preview • Pico CSS</title>
+</head>
+
+<body>
+    <%- include('../partials/sidebar'); -%>
+        <main>
+            <div class="todoes">
+
+                <section class="d-flex justify-content-center align-items-end gap-2 mt-2 mb-4">
+                    <h2 class="title">
+                        <%- include('../icons/tasks-icon'); %>
+                            <span>Create</span>
+                    </h2>
+                </section>
+
+                <form method="post" action="/todoes/create" autocomplete="off">
+                    
+                    <div class="mb-3">
+                        <label class="form-label" for="task">Task</label>
+                        <input class="form-control" type="text" id="task" name="task" placeholder="Task"
+                            aria-label="Task">
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <a href="/" role="button" class="btn btn-secondary">
+                            <%- include('../icons/previous-icon'); -%>
+                                <span>Back</span>
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <%- include('../icons/plus-icon'); -%>
+                                <span>Create</span>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </main>
+
+        <script type="module" src="/src/assets/js/main.ts?t=<%= new Date().getTime() %>"></script>
+</body>
+
+</html>

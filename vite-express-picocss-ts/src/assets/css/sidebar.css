@@ -1,5 +1,5 @@
 :root {
-    --sidebar-bg: hsl(0, 0%, 100%);
+    --sidebar-width: 250px;
 }
 
 [data-theme=dark] {
@@ -7,9 +7,94 @@
 }
 
 .sidebar {
-    width: 250px;
+    width: var(--sidebar-width);
+    height: 100dvh;
     border-right: solid 1px var(--pico-card-border-color);
+    transition: all 0.3s ease-in-out;
+    background-color: var(--pico-background-color);
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: calc(var(--sidebar-width) * -1);
+
+    & .sidebar-header {
+        position: relative;
+
+        & button.hamburger {
+            position: absolute;
+            top: 10px;
+            left: var(--sidebar-width);
+            border-radius: 0 0.25rem 0.25rem 0;
+            padding: 0;
+            margin: 0;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    & .hamburger-box {
+        scale: 0.8;
+    }
+
+    & .hamburger-inner,
+    & .hamburger-inner::before,
+    & .hamburger-inner::after,
+    & .hamburger.is-active .hamburger-inner,
+    & .hamburger.is-active .hamburger-inner::before,
+    & .hamburger.is-active .hamburger-inner::after {
+        background-color: currentColor;
+    }
+
 }
+
+.sidebar-is-active {
+
+    & .overlay {
+        display: block;
+    }
+
+    & .sidebar {
+        left: 0;
+    }
+
+}
+
+@media (min-width: 1024px) {
+
+    .sidebar {
+        position: static;
+        top: auto;
+        left: auto;
+
+        & .sidebar-header {
+            position: relative;
+
+            & button.hamburger {
+                display: none;
+            }
+        }
+    }
+
+    .sidebar-is-active {
+
+        & .overlay {
+            display: none;
+        }
+
+        & .sidebar {
+            left: auto;
+        }
+
+    }
+}
+
 
 input[name='color-mode-toggle'][type=checkbox][role=switch] {
     height: 30px;
