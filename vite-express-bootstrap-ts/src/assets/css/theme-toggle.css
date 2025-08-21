@@ -11,13 +11,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-color: hsl(var(--sidebar-bg-darker), 0.3);
-	color: hsl(var(--sidebar-color), 0.8);
-
-	&:hover {
-		background-color: hsl(var(--sidebar-bg-darker));
-		color: hsl(var(--sidebar-color), 1);
-	}
+	padding: 2px;
 
 	& svg {
 		width: 2rem;

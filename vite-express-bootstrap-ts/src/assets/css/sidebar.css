@@ -1,137 +1,121 @@
-:root {
-    --sidebar-width: 250px;
-}
+.btn.btn-menu {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
 
-[data-theme=dark] {
-    --sidebar-bg: hsl(220, 24%, 10%);
+    & svg {
+        width: 40px;
+        height: auto;
+    }
+
+    &:hover {
+        background-color: var(--bs-light-bg-subtle);
+    }
+
+    &:focus,
+    &:active {
+        outline: none !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
 }
 
 .sidebar {
+    --sidebar-width: 250px;
+    
     width: var(--sidebar-width);
     height: 100dvh;
-    border-right: solid 1px var(--bs-border-color);
-    transition: all 0.3s ease-in-out;
     background-color: var(--bs-body-bg);
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    left: calc(var(--sidebar-width) * -1);
+    color: var(--bs-body-color);
 
     & .sidebar-header {
         position: relative;
 
-        & button.hamburger {
+        & button {
             position: absolute;
-            top: 10px;
-            left: var(--sidebar-width);
+            top: 0;
+            right: 0;
             border-radius: 0 0.25rem 0.25rem 0;
             padding: 0;
             margin: 0;
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             display: flex;
             justify-content: center;
             align-items: center;
+            opacity: 0.5;
+
+            & svg {
+                width: 30px;
+                height: auto;
+            }
 
             &:hover {
                 opacity: 1;
             }
-        }
-    }
 
-    & .hamburger-box {
-        scale: 0.8;
-    }
-
-    & .hamburger-inner,
-    & .hamburger-inner::before,
-    & .hamburger-inner::after,
-    & .hamburger.is-active .hamburger-inner,
-    & .hamburger.is-active .hamburger-inner::before,
-    & .hamburger.is-active .hamburger-inner::after {
-        background-color: currentColor;
-    }
-
-}
-
-.sidebar-is-active {
-
-    & .overlay {
-        display: block;
-    }
-
-    & .sidebar {
-        left: 0;
-    }
-
-}
-
-@media (min-width: 1024px) {
-
-    .sidebar {
-        position: static;
-        top: auto;
-        left: auto;
-
-        & .sidebar-header {
-            position: relative;
-
-            & button.hamburger {
-                display: none;
+            &:focus,
+            &:active {
+                outline: none !important;
+                box-shadow: none !important;
+                border: none !important;
             }
         }
     }
 
-    .sidebar-is-active {
+    & .sidebar-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
 
-        & .overlay {
-            display: none;
+        & li {
+            padding: 0 1rem;
+            margin: 0;
+        }
+    }
+
+    & .sidebar-menu a {
+        width: 100%;
+        height: 40px;
+        padding: 0 0.8rem;
+        align-items: center;
+        display: flex;
+        gap: 0.5rem;
+        font-weight: 300;
+        font-size: 0.9rem;
+        text-decoration: none;
+        color: var(--bs-body-color);
+        border-bottom: 1px solid var(--border-color);
+
+        & svg {
+            width: auto;
+            height: 18px;
         }
 
-        & .sidebar {
-            left: auto;
+        & span {
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        &:hover {
+            color: var(--sidebar-hover-color);
+            font-weight: 600;
         }
 
     }
 }
 
-
-input[name='color-mode-toggle'][type=checkbox][role=switch] {
-    height: 30px;
-    width: 50px;
-}
-
-details.dropdown {
-    margin-bottom: 0;
-
+.sidebar .dropdown {
     & img {
-        width: 28px;
+        width: 25px;
         height: auto;
     }
-}
-
-details.language-menu {
-    width: calc(100% - 1rem);
-}
-
-details.language-menu>summary {
-    display: flex;
-    gap: 0.4rem;
-}
-
-details.language-menu>summary+ul {
-    padding: 0.5rem 0;
-}
-
-.pico details.language-menu>summary+ul li a {
-    display: flex;
-    gap: 0.5rem;
-    width: 160px;
-    padding: 0.5rem 1rem;
-}
-
-label:has([type=checkbox], [type=radio]) {
-    margin-bottom: 0;
 }
 
 .sidebar-logo {
@@ -145,48 +129,6 @@ label:has([type=checkbox], [type=radio]) {
     cursor: pointer;
 
     &:hover {
-        color: red;
+        color: var(--sidebar-hover-color);
     }
-}
-
-
-ul.sidebar-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-
-    & li {
-        padding: 0 1rem;
-        margin: 0;
-    }
-}
-
-.sidebar-menu a {
-
-    width: 100%;
-    height: 40px;
-    padding: 0 0.8rem;
-    align-items: center;
-    display: flex;
-    gap: 0.5rem;
-    border-bottom: 1px solid var(--pico-card-border-color);
-    font-weight: 300;
-    font-size: 0.9rem;
-    text-decoration: none;
-
-    & svg {
-        width: auto;
-        height: 18px;
-    }
-
-    & span {
-        text-transform: uppercase;
-        line-height: 1;
-    }
-
-    &:hover {
-        color: red;
-        font-weight: 600;
-    }
-
 }

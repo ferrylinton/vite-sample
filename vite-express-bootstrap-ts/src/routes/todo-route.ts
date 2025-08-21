@@ -1,25 +1,23 @@
+import { MESSAGE } from '@/config/app-constant';
+import constant from '@/config/env-constant';
 import { countTodoes, createTodo, deleteTodoById, findTodoById, findTodoes, updateTodo } from '@/services/todo-service';
 import { CreateTodoValidation } from '@/validations/todo-validation';
 import express, { NextFunction, Request, Response } from 'express';
+import { treeifyError } from 'zod';
 
-const NEW_TODO = "newTodo";
-const MESSAGE = "message";
 
 const viewListHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const todoes = await findTodoes();
         const total = await countTodoes();
-        const newTodo = req.cookies[NEW_TODO];
         const message = req.cookies[MESSAGE];
 
-        res.cookie(NEW_TODO, '', { expires: new Date(0) });
         res.cookie(MESSAGE, '', { expires: new Date(0) });
 
         res.render('todoes/todo-list', {
             todoes,
             total,
-            message,
-            newTodo
+            message
         });
     } catch (error) {
         next(error);
@@ -49,7 +47,6 @@ const viewCreateHandler = async (req: Request, res: Response, next: NextFunction
 const createTodoHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const total = await countTodoes();
-        console.log(total);
 
         if (total >= 20) {
             res.render("todoes/todo-create", {
@@ -60,14 +57,12 @@ const createTodoHandler = async (req: Request, res: Response, next: NextFunction
 
             if (validation.success) {
                 let task = req.body.task;
-                const todo = await createTodo(task);
-                console.log(todo);
-                console.log(res.t("home"));
-                //res.cookie(MESSAGE, res.t("dataIsSaved", task), { maxAge: 3000, httpOnly: true });
-                //res.cookie(NEW_TODO, todo, { maxAge: 3000, httpOnly: true });
+                await createTodo(task);
+                res.cookie(MESSAGE, res.t("dataIsCreated", task), { maxAge: constant.TOAST_COOKIE_MAX_AGE, httpOnly: true });
                 res.redirect('/');
             } else {
-                const errorValidations = validation.error.issues;
+                const errorValidations = treeifyError(validation.error).properties;
+                console.log(errorValidations);
                 res.render("todoes/todo-create", {
                     errorValidations
                 });
@@ -96,8 +91,6 @@ const viewUpdateHandler = async (req: Request, res: Response, next: NextFunction
 
 const updateTodoHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log('update....');
-        console.log(req.body);
         const id: string = req.params.id;
         const current = await findTodoById(id);
 
@@ -135,6 +128,7 @@ const toggleStatusHandler = async (req: Request, res: Response, next: NextFuncti
 
         if (current) {
             await updateTodo(id, current.task, !current.done);
+            res.locals.message = "Data is updated"
             res.cookie(MESSAGE, res.t("dataIsUpdated", current.task), { maxAge: 3000, httpOnly: true });
         }
 

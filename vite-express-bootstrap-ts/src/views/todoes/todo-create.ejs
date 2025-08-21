@@ -18,21 +18,28 @@
                     </h2>
                 </section>
 
-                <form method="post" action="/todoes/create" autocomplete="off">
-                    
+                <form class="needs-validation" method="post" action="/todoes/create" autocomplete="off">
+
                     <div class="mb-3">
                         <label class="form-label" for="task">Task</label>
-                        <input class="form-control" type="text" id="task" name="task" placeholder="Task"
-                            aria-label="Task">
+                        <input
+                            class="form-control form-control-lg <%= (typeof errorValidations !== 'undefined' && errorValidations.task) ? 'is-invalid' : '' %>"
+                            maxlength="150" ="text" id="task" name="task" placeholder="Task" aria-label="Task">
+
+                        <% if(typeof errorValidations !== 'undefined'  && errorValidations.task) { %>
+                            <div class="invalid-feedback">
+                                <%= t(errorValidations.task.errors[0]) %>
+                            </div>
+                            <% } %>
                     </div>
 
                     <div class="d-flex gap-2">
-                        <a href="/" role="button" class="btn btn-secondary">
+                        <a href="/" role="button" class="btn btn-secondary btn-ico">
                             <%- include('../icons/previous-icon'); -%>
                                 <span>Back</span>
                         </a>
-                        <button type="submit" class="btn btn-primary">
-                            <%- include('../icons/plus-icon'); -%>
+                        <button type="submit" class="btn btn-primary btn-icon">
+                            <%- include('../icons/save-icon'); -%>
                                 <span>Create</span>
                         </button>
                     </div>

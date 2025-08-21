@@ -4,11 +4,13 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development vite",
-    "build": "rimraf dist && cross-env NODE_ENV=production vite build",
+    "dev": "npm run build-bootstrap && cross-env NODE_ENV=development vite",
+    "build": "rimraf dist && npm run build-bootstrap && cross-env NODE_ENV=production vite build",
     "build-css": "postcss ./src/assets/css/main.css -o ./dist/main.css",
     "start": "cd dist && cross-env NODE_ENV=production node server.js",
-    "start-install": "cd dist && npm install --omit=dev"
+    "start-install": "cd dist && npm install --omit=dev",
+    "build-variables": "tsx color.ts",
+    "build-bootstrap": "cross-env NODE_ENV=development vite build --config vite.config.bootstrap.ts"
   },
   "keywords": [
     "vite",
@@ -34,6 +36,7 @@
     "zod": "^4.0.14"
   },
   "devDependencies": {
+    "@csstools/postcss-relative-color-syntax": "^3.0.10",
     "@fullhuman/postcss-purgecss": "^7.0.2",
     "@popperjs/core": "^2.11.8",
     "@types/bootstrap": "^5.2.10",
@@ -56,12 +59,17 @@
     "glob": "^11.0.3",
     "hamburgers": "^1.2.1",
     "postcss": "^8.5.6",
+    "postcss-calc": "^10.1.1",
     "postcss-cli": "^11.0.1",
+    "postcss-color-mod-function": "^4.1.1",
+    "postcss-custom-properties": "^14.0.6",
+    "postcss-discard-comments": "^7.0.4",
     "postcss-import": "^16.1.1",
     "postcss-preset-env": "^10.2.4",
     "prettier": "^3.6.2",
     "rimraf": "^6.0.1",
     "rollup-plugin-node-externals": "^8.0.1",
+    "sass-embedded": "^1.90.0",
     "tailwindcss": "^4.1.11",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",

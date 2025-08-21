@@ -1,6 +1,7 @@
 export type QueryParams = {
   keyword?: string;
   page?: string;
-  lang?: string;
-  theme?: string
+  locale?: string;
+  theme?: string;
+  variant?: string;
 }

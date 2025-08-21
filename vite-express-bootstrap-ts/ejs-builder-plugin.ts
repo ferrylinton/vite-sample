@@ -7,7 +7,7 @@ import { nodeExternals } from 'rollup-plugin-node-externals';
 import { build, PluginOption, ResolvedConfig } from "vite";
 
 
-async function copyEjsFiles(bundle: OutputBundle, outDir: string) {
+async function copyEjsFiles(bundle: OutputBundle, outDir: string, hash: string) {
     const ejsFiles = sync("./src/views/**/*.ejs".replace(/\\/g, "/"));
     const regex = /<script.*(\/script>)/gs;
 
@@ -15,14 +15,12 @@ async function copyEjsFiles(bundle: OutputBundle, outDir: string) {
         let file = ejsFiles[i].replace('src', outDir);
         let content = fse.readFileSync(ejsFiles[i], 'utf-8');
 
-        if (file.includes('partials') || file.includes('icons')) {
+        if (file.includes('head')) {
+            console.log(hash);
+            content = content.replaceAll('.css?t=<%= new Date().getTime() %>', `-${hash}.css`);
             fse.outputFileSync(file, content, 'utf-8');
-        } else if (content.includes('</head>') || content.includes('</script>')) {
-            Object.keys(bundle)
-                .filter(key => key.endsWith('.css'))
-                .forEach(key => {
-                    content = content.replace('</head>', `<link rel="stylesheet" href="/${key}" />\n\t</head>`)
-                });
+
+        } else if (content.includes('</script>')) {
             Object.keys(bundle)
                 .filter(key => key.endsWith('.js'))
                 .forEach(key => {
@@ -67,7 +65,7 @@ async function buildBackend(outDir: string) {
     });
 }
 
-export const ejsBuilder = (): PluginOption => {
+export const ejsBuilder = (hash: string): PluginOption => {
 
     let config: ResolvedConfig;
 
@@ -81,7 +79,7 @@ export const ejsBuilder = (): PluginOption => {
 
                 server.middlewares.use(async (req, res, next) => {
 
-                    if (req.url === '/@vite/client' || req.url?.endsWith('.html') || req.url?.includes('node_modules') || req.url?.includes('.ts') || req.url?.includes('.mjs')) {
+                    if (req.url?.includes('/@vite/client') || req.url?.endsWith('.html') || req.url?.includes('node_modules') || req.url?.includes('.ts') || req.url?.includes('.mjs')) {
                         next();
                     } else {
                         try {
@@ -124,7 +122,7 @@ export const ejsBuilder = (): PluginOption => {
             },
 
             async writeBundle(__options, bundle) {
-                copyEjsFiles(bundle, config.build.outDir);
+                copyEjsFiles(bundle, config.build.outDir, hash);
             },
 
         }

@@ -4,12 +4,21 @@ import postcssImport from 'postcss-import'
 import postcssNesting from 'postcss-nesting';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
+import postcssCustomProperties from 'postcss-custom-properties';
+import calc from "postcss-calc";
+import discardComment from "postcss-discard-comments";
+import postcssRelativeColorSyntax from '@csstools/postcss-relative-color-syntax';
+import postcssColorMod from 'postcss-color-mod-function';
 
 export default {
   plugins: [
-    autoprefixer,
-    process.env.NODE_ENV === 'production' ? cssnano : null,
+    autoprefixer(),
     postcssImport(),
+    postcssColorMod(),
+    discardComment({ removeAll: true }),
+    postcssCustomProperties(),
+    postcssRelativeColorSyntax(),
+    calc(),
     postcssNesting({
       noIsPseudoSelector: true
     }),
@@ -22,6 +31,7 @@ export default {
     }),
     process.env.NODE_ENV === 'production' ? purgeCSSPlugin({
       content: ['./src/views/**/*.ejs'],
+      css: ['./assets/css/*.css'],
       fontFace: true,
       keyframes: true,
       variables: true,
@@ -30,5 +40,6 @@ export default {
       ],
 
     }) : null,
+    process.env.NODE_ENV === 'production' ? cssnano : null,
   ].filter(Boolean)
 }

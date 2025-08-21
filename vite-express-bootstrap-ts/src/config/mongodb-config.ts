@@ -1,4 +1,4 @@
-import constant from '@/config/constant';
+import constant from '@/config/env-constant';
 import {
 	ConnectionPoolMonitoringEvent,
 	Db,

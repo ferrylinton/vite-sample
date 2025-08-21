@@ -1,9 +1,8 @@
-@import "bootstrap/dist/css/bootstrap.css";
-@import "theme-toggles/css/classic.css";
-@import "hamburgers/dist/hamburgers.css";
+/* @import "./bootstrap-default.css"; */
+/* @import "./bootstrap-darkly.css"; */
+@import "./hamburgers.css";
 @import "./theme-toggle.css";
 @import "./sidebar.css";
-@import "./variables.css";
 
 
 body {
@@ -25,23 +24,20 @@ a {
 
 .overlay {
     position: fixed;
-    /* Or absolute, depending on your needs */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: hsla(0, 0%, 0%, 0.5);
-    /* Semi-transparent black */
+    backdrop-filter: blur(10px);
     z-index: 99;
-    /* Ensure it's on top of other content */
     display: none;
-    /* Hide by default, show with JavaScript or CSS */
     transition: all 0.3s ease-in-out;
+    background-color: hsl(var(--sidebar-bg-h), var(--sidebar-bg-s), 80%, 0.2);
 }
 
-[data-theme=dark] {
-    .overlay {
-        background-color: hsla(0, 0%, 100%, 0.2);
+[data-bs-theme=dark] {
+    & .overlay {
+        background-color: hsl(var(--sidebar-bg-h), var(--sidebar-bg-s), 30%, 0.2);
     }
 }
 
@@ -89,9 +85,11 @@ main {
 
 .todoes {
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
 
     & table.list {
+
+        --td-height: 25px;
 
         & tbody td {
             padding: 0.4rem 0.5rem;
@@ -104,7 +102,14 @@ main {
         }
 
         & tbody tr td:last-child {
-            width: 110px;
+            width: 80px;
+
+            & [class^="link"] {
+                & svg {
+                    height: var(--td-height);
+                    width: auto;
+                }
+            }
         }
 
         & tbody tr:last-child td {
@@ -115,13 +120,27 @@ main {
             text-decoration: line-through;
         }
 
-        & .form-check-input{
-            width: 2rem;
-            height: 2rem;
+        & .form-check {
+            padding: 0;
+            margin: 0;
         }
+
+        & .form-check-input{
+            width: var(--td-height);
+            height: var(--td-height);
+            margin: 0;
+        }
+
+        & span{
+            display: inline-block;
+            line-height: var(--td-height);
+        }
+
     }
 
     & table.detail {
+
+        --td-height: 25px;
 
         & tbody td,
         & tbody th {
@@ -130,9 +149,8 @@ main {
 
         & th {
             width: 110px;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 0.8rem;
+            font-weight: 400;
+            color: var(--bs-secondary);
         }
     }
 
@@ -146,6 +164,7 @@ main {
     justify-content: center;
     gap: 1rem;
     padding: 1rem;
+    margin: 1rem 0;
 
     & svg {
         width: 60px;
@@ -153,12 +172,40 @@ main {
     }
 }
 
-.btn.btn-icon {
+.btn {
 
-    padding: 0.1rem 0.25rem;
+    & span {
+        line-height: 1;
+    }
 
-    & svg {
-        height: 26px;
-        width: auto;
+    &:has(svg) {
+ 
+        & svg {
+            margin-right: 4px;
+            height: 22px;
+            width: auto;
+        }
+    }
+}
+
+.btn.btn-lg {
+    &:has(svg) {
+        & svg {
+            height: 28px;
+            width: auto;
+            margin-right: 2px;
+        }
+    }
+}
+
+.table .btn {
+
+    &:has(svg) {
+        padding: 2px 5px;
+
+        & svg {
+            height: 26px;
+            width: auto;
+        }
     }
 }

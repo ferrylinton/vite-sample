@@ -1,4 +1,4 @@
-import constant from "@/config/constant";
+import constant from "@/config/env-constant";
 import { getCollection } from "@/config/mongodb-config";
 import { logger } from "@/config/winston-config";
 import { Pageable } from "@/types/common-type";

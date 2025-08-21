@@ -1,10 +1,8 @@
-import { Dropdown } from 'bootstrap';
-import { SwitchColorMode } from './theme-switcher';
+import { Dropdown, Offcanvas, Toast } from 'bootstrap';
+import { ThemeToggle } from './theme-toggle';
 import { Todo } from "./todo";
 
-import '../css/main.css';
-
-const initToggleMenu = () => {
+const initMenuToggle = () => {
     const menuToggle = document.getElementById('menu-toggle');
 
     if (menuToggle) {
@@ -20,20 +18,53 @@ const initToggleMenu = () => {
     }
 }
 
-window.addEventListener("load", () => {
-    // Your TypeScript code to execute after all page resources are loaded
-    console.log("Page and all resources loaded!");
+const initToat = () => {
+    const messageToastEl = document.getElementById('messageToast');
 
-    const switchColorMode = new SwitchColorMode();
-    switchColorMode.init();
-    initToggleMenu();
-    Todo.init();
+    if (messageToastEl) {
+        const messageToast = Toast.getOrCreateInstance(messageToastEl);
+        messageToast.show()
+    }
+}
 
+const initDropdown = () => {
     Array.from(document.querySelectorAll('.dropdown'))
         .forEach(toastNode => {
             new Dropdown(toastNode);
         })
+}
+
+const initSidebar = () => {
+    const offcanvasResponsiveEl = document.getElementById('offcanvasResponsive');
+
+    if (offcanvasResponsiveEl) {
+        new Offcanvas(offcanvasResponsiveEl);
+    }
+}
+
+window.addEventListener("load", () => {
+    // Your TypeScript code to execute after all page resources are loaded
+    console.log("Page and all resources loaded!");
+
+    const themeToggle = new ThemeToggle();
+    themeToggle.init();
+    initMenuToggle();
+    initToat();
+    Todo.init();
+
+    initDropdown();
+
+    initSidebar();
 
 });
 
+window.toast = () => {
+    const messageToastEl = document.getElementById('messageToast');
+
+    if (messageToastEl) {
+        const messageToast = Toast.getOrCreateInstance(messageToastEl);
+        messageToast.show()
+    }
+
+}
 

@@ -1,5 +1,6 @@
-import config from '@/config/constant';
-import { i18nConfig } from '@/config/i18n-config';
+import constant from '@/config/env-constant';
+import config from '@/config/env-constant';
+import { DEFAULT_LOCALE, i18nConfig, LOCALES } from '@/config/i18n-config';
 import { errorHandler } from '@/middlewares/error-handler';
 import { scriptInjectorMiddleware } from '@/middlewares/inject-script';
 import todoRoute from '@/routes/todo-route';
@@ -9,6 +10,7 @@ import cookieParser from 'cookie-parser';
 import express, { NextFunction, Request, Response } from 'express';
 import favicon from 'express-favicon';
 import path from 'path';
+import { initLocale, initTheme, initVariant } from './utils/app-util';
 
 export const app = express();
 app.set('trust proxy', 1);
@@ -46,17 +48,9 @@ app.use((
 		res.locals.currentPath = req.path;
 		res.locals.NODE_ENV = config.NODE_ENV;
 
-		if (req.cookies.theme === undefined) {
-			res.cookie('theme', 'light', { maxAge: 900000, httpOnly: true });
-			res.locals.theme = 'light';
-		} else {
-			res.locals.theme = req.cookies.theme;
-		}
-
-		if (req.query.theme && ['dark', 'light'].includes(req.query.theme)) {
-			res.cookie('theme', req.query.theme, { maxAge: 900000, httpOnly: true });
-			res.locals.theme = req.query.theme;
-		}
+		initLocale(req, res);
+		initVariant(req, res);
+		initTheme(req, res);
 
 		next();
 	} catch (error) {
@@ -66,7 +60,7 @@ app.use((
 });
 
 if (!import.meta.env?.PROD)
-app.use(scriptInjectorMiddleware(`<script type="module" src="/@vite/client?t=${new Date().getTime()}"></script>`));
+	app.use(scriptInjectorMiddleware(`<script type="module" src="/@vite/client?t=${new Date().getTime()}"></script>`));
 
 // Routes
 app.use('/', todoRoute);

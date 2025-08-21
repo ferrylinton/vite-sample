@@ -14,7 +14,10 @@ interface Constant {
     MONGODB_PASSWORD: string
     MONGODB_DATABASE: string
 
-    PAGE_SIZE: number
+    APP_NAME : string
+    COOKIE_SECRET : string
+    APP_COOKIE_MAX_AGE: number
+    TOAST_COOKIE_MAX_AGE: number
 }
 
 if (!process.env.MONGODB_URL) {
@@ -50,7 +53,10 @@ const constant: Constant = {
     MONGODB_PASSWORD: process.env.MONGODB_PASSWORD,
     MONGODB_DATABASE: process.env.MONGODB_DATABASE,
 
-    PAGE_SIZE : 10,
+    APP_NAME : process.env.APP_NAME || 'TODO',
+    COOKIE_SECRET : process.env.COOKIE_SECRET || 'ferrylinton',
+    APP_COOKIE_MAX_AGE : process.env.APP_COOKIE_MAX_AGE ? parseInt(process.env.APP_COOKIE_MAX_AGE) : 30 * 24 * 60 * 60 * 1000,
+    TOAST_COOKIE_MAX_AGE : process.env.TOAST_COOKIE_MAX_AGE ? parseInt(process.env.TOAST_COOKIE_MAX_AGE) : 5 * 1000
 };
 
 export default constant;

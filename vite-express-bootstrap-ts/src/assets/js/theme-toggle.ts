@@ -1,12 +1,4 @@
-/*!
- * Minimal theme switcher using a checkbox
- *
- * Pico.css - https://picocss.com
- * Copyright 2019-2025 - Licensed under MIT
- * Modified by Yohn https://github.com/Yohn/PicoCSS
- */
-
-export class SwitchColorMode {
+export class ThemeToggle {
     // Config
     private _scheme: string = "auto";
     private rootAttribute: string = "data-bs-theme";
@@ -17,10 +9,8 @@ export class SwitchColorMode {
     init(): void {
         this.checkbox = document.getElementById('theme-toggle-checkbox') as HTMLInputElement;
         if (!this.checkbox) {
-            console.error("Theme switcher toggle not found");
+            console.error("Theme toggle not found");
             return;
-        }else{
-            console.log(this.checkbox)
         }
 
         // If first visit, use the theme from <html> attribute; otherwise, use stored preference
@@ -31,10 +21,6 @@ export class SwitchColorMode {
 
         // Listen for user changes
         this.checkbox.addEventListener("change", (event) => {
-            const current = event.currentTarget as HTMLInputElement;
-            console.log('xxxxxxxxxxxxxx');
-            console.log(current.checked)
-            console.log(this.checkbox?.checked);
             this.scheme = this.checkbox!.checked ? "dark" : "light";
             this.schemeToLocalStorage();
         });
@@ -72,7 +58,7 @@ export class SwitchColorMode {
 
     // Apply scheme
     private applyScheme(): void {
-        console.log(this._scheme);
+        console.log("scheme : ",  this._scheme);
         document.documentElement.setAttribute(this.rootAttribute, this._scheme);
     }
 
@@ -81,5 +67,3 @@ export class SwitchColorMode {
         window.localStorage?.setItem(this.localStorageKey, this.scheme);
     }
 }
-
-// Init

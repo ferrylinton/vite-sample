@@ -1,4 +1,4 @@
-import constant from '@/config/constant';
+import constant from '@/config/env-constant';
 import path from 'path';
 import { createLogger, format, transports } from 'winston';
 const { combine, timestamp, printf, errors } = format;

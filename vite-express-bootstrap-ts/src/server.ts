@@ -1,4 +1,4 @@
-import config from '@/config/constant';
+import config from '@/config/env-constant';
 import { app } from '@/app';
 
 app.listen(config.port, () => {

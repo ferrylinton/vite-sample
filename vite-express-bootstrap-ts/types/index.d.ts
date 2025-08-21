@@ -5,4 +5,4 @@ export interface PluginUserOptions {
     }
 }
 
-export default function plugin(options?: PluginUserOptions) : import('vite').Plugin
+export default function plugin(options?: PluginUserOptions): import('vite').Plugin
