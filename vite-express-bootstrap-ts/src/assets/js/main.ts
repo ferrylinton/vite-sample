@@ -1,70 +1,59 @@
 import { Dropdown, Offcanvas, Toast } from 'bootstrap';
 import { ThemeToggle } from './theme-toggle';
-import { Todo } from "./todo";
+import { Todo } from './todo';
 
 const initMenuToggle = () => {
-    const menuToggle = document.getElementById('menu-toggle');
+	const menuToggle = document.getElementById('menu-toggle');
 
-    if (menuToggle) {
-        menuToggle.addEventListener('click', (e) => {
-            e.preventDefault();
+	if (menuToggle) {
+		menuToggle.addEventListener('click', e => {
+			e.preventDefault();
 
-            if (e.currentTarget instanceof HTMLElement) {
-                e.currentTarget.classList.toggle('is-active');
-                document.body.classList.toggle('sidebar-is-active');
-            }
-
-        });
-    }
-}
+			if (e.currentTarget instanceof HTMLElement) {
+				e.currentTarget.classList.toggle('is-active');
+				document.body.classList.toggle('sidebar-is-active');
+			}
+		});
+	}
+};
 
 const initToat = () => {
-    const messageToastEl = document.getElementById('messageToast');
+	const messageToastEl = document.getElementById('messageToast');
 
-    if (messageToastEl) {
-        const messageToast = Toast.getOrCreateInstance(messageToastEl);
-        messageToast.show()
-    }
-}
+	if (messageToastEl) {
+		const messageToast = Toast.getOrCreateInstance(messageToastEl);
+		messageToast.show();
+	}
+};
 
 const initDropdown = () => {
-    Array.from(document.querySelectorAll('.dropdown'))
-        .forEach(toastNode => {
-            new Dropdown(toastNode);
-        })
-}
+	Array.from(document.querySelectorAll('.dropdown')).forEach(toastNode => {
+		new Dropdown(toastNode);
+	});
+};
 
 const initSidebar = () => {
-    const offcanvasResponsiveEl = document.getElementById('offcanvasResponsive');
+	const offcanvasResponsiveEl = document.getElementById('offcanvasResponsive');
 
-    if (offcanvasResponsiveEl) {
-        new Offcanvas(offcanvasResponsiveEl);
-    }
-}
+	if (offcanvasResponsiveEl) {
+		new Offcanvas(offcanvasResponsiveEl);
+	}
+};
 
-window.addEventListener("load", () => {
-    // Your TypeScript code to execute after all page resources are loaded
-    console.log("Page and all resources loaded!");
+const initThemeToggle = () => {
+	const themeToggle = new ThemeToggle();
+	themeToggle.init();
+};
 
-    const themeToggle = new ThemeToggle();
-    themeToggle.init();
-    initMenuToggle();
-    initToat();
-    Todo.init();
+window.addEventListener('load', () => {
+	// Your TypeScript code to execute after all page resources are loaded
+	console.log('Page and all resources loaded!');
 
-    initDropdown();
+	initThemeToggle();
+	initMenuToggle();
+	initToat();
+	initDropdown();
+	initSidebar();
 
-    initSidebar();
-
+	Todo.init();
 });
-
-window.toast = () => {
-    const messageToastEl = document.getElementById('messageToast');
-
-    if (messageToastEl) {
-        const messageToast = Toast.getOrCreateInstance(messageToastEl);
-        messageToast.show()
-    }
-
-}
-

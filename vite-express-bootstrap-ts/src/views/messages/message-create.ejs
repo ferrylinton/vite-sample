@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html translate="no" lang="en">
+
+<head>
+  <%- include('../partials/head', {title: "Todo App With Bootstrap" }); %>
+</head>
+
+<body>
+  <%- include('../partials/sidebar'); %>
+  <main>
+    <div class="page-container">
+      <section class="d-flex justify-content-center align-items-end gap-2 mt-2 mb-4">
+        <h2 class="title">
+          <%- include('../icons/message-icon'); %>
+          <span>
+            <%= t('message') %>
+          </span>
+        </h2>
+      </section>
+    </div>
+  </main>
+</body>
+
+</html>

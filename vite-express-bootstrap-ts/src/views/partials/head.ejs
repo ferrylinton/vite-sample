@@ -1,4 +1,4 @@
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="application-name" content="Simple Template" lang="en" />
 <meta name="application-name" content="Template Sederhana" lang="id" />
@@ -9,10 +9,9 @@
 <meta name="color-scheme" content="light dark" />
 <meta name="theme-color" content="#3c790a" media="(prefers-color-scheme: dark)" />
 <title><%= title || 'Todo App' %></title>
-<% if (variant === 'darkly') { %>
-  <link rel="stylesheet" href="/assets/css/bootstrap-darkly.css?t=<%= new Date().getTime() %>" />
-<% } else { %>
-  <link rel="stylesheet" href="/assets/css/bootstrap-default.css?t=<%= new Date().getTime() %>" />
+
+<% if (bootstrapVariant) { %>
+<link rel="stylesheet" href="<%= bootstrapVariant.url %>" />
 <% } %>
 
 <link rel="stylesheet" href="/assets/css/main.css?t=<%= new Date().getTime() %>" />

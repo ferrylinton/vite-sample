@@ -1,211 +1,250 @@
-/* @import "./bootstrap-default.css"; */
-/* @import "./bootstrap-darkly.css"; */
-@import "./hamburgers.css";
-@import "./theme-toggle.css";
-@import "./sidebar.css";
-
+@import './theme-toggle.css';
+@import './sidebar.css';
 
 body {
-    display: flex;
-    min-height: 100dvh;
-    min-width: 350px;
-    width: 100%;
+	display: flex;
+	min-height: 100dvh;
+	min-width: 350px;
+	width: 100%;
 }
 
 svg {
-    height: 20px;
-    width: auto;
-    fill: currentColor;
+	height: 20px;
+	width: auto;
+	fill: currentColor;
 }
 
 a {
-    text-decoration: none;
-}
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(10px);
-    z-index: 99;
-    display: none;
-    transition: all 0.3s ease-in-out;
-    background-color: hsl(var(--sidebar-bg-h), var(--sidebar-bg-s), 80%, 0.2);
-}
-
-[data-bs-theme=dark] {
-    & .overlay {
-        background-color: hsl(var(--sidebar-bg-h), var(--sidebar-bg-s), 30%, 0.2);
-    }
+	text-decoration: none;
 }
 
 main {
-    flex-grow: 1;
-    padding: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+	flex-grow: 1;
+	padding: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
 }
 
 .title {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 1rem 0;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+	margin: 1rem 0 2rem 0;
 
-    & span {
-        text-transform: uppercase;
-        font-size: 1.5rem;
-        font-weight: 200;
-        line-height: 1;
-    }
+	& span {
+		text-transform: uppercase;
+		font-size: 1.5rem;
+		font-weight: 200;
+		line-height: 1;
+	}
 
-    & svg {
-        height: 1.4rem;
-        width: auto;
-    }
+	& svg {
+		height: 1.4rem;
+		width: auto;
+	}
 
-    &::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 100%;
-        margin: 5px auto;
-        width: 80%;
-        height: 0.08rem;
-        background: var(--pico-color);
-        opacity: 0.9;
-    }
+	&::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 100%;
+		margin: 5px auto;
+		width: 80%;
+		height: 0.08rem;
+		background: var(--bs-secondary);
+		opacity: 0.9;
+	}
 }
 
 .todoes {
-    width: 100%;
-    max-width: 500px;
+	width: 100%;
+	max-width: 500px;
+	--checkbox-height: 25px;
 
-    & table.list {
+	& .form-check {
+		padding: 0;
+		margin: 0;
+	}
 
-        --td-height: 25px;
+	& .form-check-input {
+		width: var(--checkbox-height);
+		height: var(--checkbox-height);
+		margin: 0;
+	}
 
-        & tbody td {
-            padding: 0.4rem 0.5rem;
-        }
+	& table.list {
+		& tbody td {
+			padding: 0.4rem 0.5rem;
+		}
 
-        & tbody tr td:nth-child(1),
-        & tbody tr td:nth-child(2) {
-            width: 40px;
-            font-size: 0.85rem;
-        }
+		& tbody tr td:nth-child(1),
+		& tbody tr td:nth-child(2) {
+			width: 40px;
+			font-size: 0.85rem;
+		}
 
-        & tbody tr td:last-child {
-            width: 80px;
+		& tbody tr td:last-child {
+			width: 80px;
 
-            & [class^="link"] {
-                & svg {
-                    height: var(--td-height);
-                    width: auto;
-                }
-            }
-        }
+			& [class^='link'] {
+				& svg {
+					height: var(--checkbox-height);
+					width: auto;
+				}
+			}
+		}
 
-        & tbody tr:last-child td {
-            border-bottom: none;
-        }
+		& tbody tr:last-child td {
+			border-bottom: none;
+		}
 
-        & tr:has(:checked) {
-            text-decoration: line-through;
-        }
+		& tr[data-done='true'] span {
+			text-decoration: line-through;
+		}
 
-        & .form-check {
-            padding: 0;
-            margin: 0;
-        }
+		& span {
+			display: inline-block;
+			line-height: var(--checkbox-height);
+		}
+	}
 
-        & .form-check-input{
-            width: var(--td-height);
-            height: var(--td-height);
-            margin: 0;
-        }
+	& table.detail {
+		--checkbox-height: 25px;
 
-        & span{
-            display: inline-block;
-            line-height: var(--td-height);
-        }
+		& tbody td,
+		& tbody th {
+			padding: 0.4rem 0.5rem;
+		}
 
-    }
-
-    & table.detail {
-
-        --td-height: 25px;
-
-        & tbody td,
-        & tbody th {
-            padding: 0.4rem 0.5rem;
-        }
-
-        & th {
-            width: 110px;
-            font-weight: 400;
-            color: var(--bs-secondary);
-        }
-    }
-
+		& th {
+			width: 110px;
+			font-weight: bolder;
+			color: var(--bs-text-secondary);
+		}
+	}
 }
 
 .empty-data {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	padding: 1rem;
+	margin: 1rem 0;
+
+	& svg {
+		width: 60px;
+		height: auto;
+	}
+}
+
+.modal .btn {
+	min-width: 100px;
+}
+
+.btn-icon {
+	min-width: 120px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5rem;
+	text-transform: uppercase;
+	line-height: 1;
+	font-size: 0.9rem;
+	letter-spacing: 1px;
+
+	& span {
+		line-height: 1;
+	}
+
+	& svg {
+		height: 22px;
+		width: auto;
+	}
+}
+
+.btn-icon.btn-lg svg {
+	height: 28px;
+	width: auto;
+	margin-right: 2px;
+}
+
+.table .btn-icon {
+	padding: 2px 5px;
+
+	& svg {
+		height: 26px;
+		width: auto;
+	}
+}
+
+.page-container {
+	width: 100%;
+	max-width: 500px;
+}
+
+.author{
     width: 100%;
+    height: 100%;
+    min-height: 500px;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     gap: 1rem;
-    padding: 1rem;
-    margin: 1rem 0;
-
-    & svg {
-        width: 60px;
-        height: auto;
-    }
 }
 
-.btn {
-
-    & span {
-        line-height: 1;
-    }
-
-    &:has(svg) {
- 
-        & svg {
-            margin-right: 4px;
-            height: 22px;
-            width: auto;
-        }
-    }
+.author-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: solid 3px hsla(var(--inverse-text-h), var(--inverse-text-s), 100%, 1);
+    box-shadow: 0 0 20px 0 hsla(var(--inverse-text-h), var(--inverse-text-s), 70%, 1);
 }
 
-.btn.btn-lg {
-    &:has(svg) {
-        & svg {
-            height: 28px;
-            width: auto;
-            margin-right: 2px;
-        }
-    }
+.author-message {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: hsl(var(--primary-h), var(--primary-s), 90%, 1);
 }
 
-.table .btn {
+.author-name {
+    font-family: "Permanent Marker", cursive;
+    font-size: 1.8rem;
+    color: var(--accent);
+    line-height: 1;
+    text-shadow: 1px 1px 1px hsla(var(--inverse-text-h), var(--inverse-text-s), 0%, 1);
+}
 
-    &:has(svg) {
-        padding: 2px 5px;
+.author-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px hsla(var(--inverse-text-h), var(--inverse-text-s), 0%, 1);
+}
 
-        & svg {
-            height: 26px;
-            width: auto;
-        }
-    }
+.author-info {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.author-info-item {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.author-info-item svg {
+    width: 20px;
+    height: 20px;
 }

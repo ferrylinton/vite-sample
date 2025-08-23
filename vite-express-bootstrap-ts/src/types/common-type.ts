@@ -16,7 +16,7 @@ export type Pageable<T> = {
 	data: Array<T>;
 	pagination: Pagination;
 	keyword?: string;
-	sort?: string
+	sort?: string;
 };
 
 export type Pagination = {

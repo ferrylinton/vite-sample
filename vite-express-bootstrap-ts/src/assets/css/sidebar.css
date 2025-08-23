@@ -1,134 +1,139 @@
 .btn.btn-menu {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
+	position: fixed;
+	top: 10px;
+	left: 10px;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0;
 
-    & svg {
-        width: 40px;
-        height: auto;
-    }
+	& svg {
+		width: 40px;
+		height: auto;
+	}
 
-    &:hover {
-        background-color: var(--bs-light-bg-subtle);
-    }
+	&:hover {
+		background-color: rgb(var(--bs-body-color-rgb), 0.1);
+	}
 
-    &:focus,
-    &:active {
-        outline: none !important;
-        box-shadow: none !important;
-        border: none !important;
-    }
+	&:focus,
+	&:active {
+		outline: none !important;
+		box-shadow: none !important;
+		border: none !important;
+	}
 }
 
 .sidebar {
-    --sidebar-width: 250px;
-    
-    width: var(--sidebar-width);
-    height: 100dvh;
-    background-color: var(--bs-body-bg);
-    color: var(--bs-body-color);
+	--sidebar-width: 250px;
 
-    & .sidebar-header {
-        position: relative;
+	height: 100dvh;
+	width: var(--sidebar-width);
+	background-color: var(--bs-body-bg);
+	color: var(--bs-body-color);
 
-        & button {
-            position: absolute;
-            top: 0;
-            right: 0;
-            border-radius: 0 0.25rem 0.25rem 0;
-            padding: 0;
-            margin: 0;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0.5;
+	& .sidebar-header {
+		position: relative;
 
-            & svg {
-                width: 30px;
-                height: auto;
-            }
+		& button {
+			position: absolute;
+			top: 0;
+			right: 0;
+			border-radius: 0 0.25rem 0.25rem 0;
+			padding: 0;
+			margin: 0;
+			width: 40px;
+			height: 40px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			opacity: 0.5;
 
-            &:hover {
-                opacity: 1;
-            }
+			& svg {
+				width: 30px;
+				height: auto;
+			}
 
-            &:focus,
-            &:active {
-                outline: none !important;
-                box-shadow: none !important;
-                border: none !important;
-            }
-        }
-    }
+			&:hover {
+				opacity: 1;
+			}
 
-    & .sidebar-menu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
+			&:focus,
+			&:active {
+				outline: none !important;
+				box-shadow: none !important;
+				border: none !important;
+			}
+		}
+	}
 
-        & li {
-            padding: 0 1rem;
-            margin: 0;
-        }
-    }
+	& .sidebar-menu {
+		list-style: none;
+		padding: 0;
+		margin: 0;
 
-    & .sidebar-menu a {
-        width: 100%;
-        height: 40px;
-        padding: 0 0.8rem;
-        align-items: center;
-        display: flex;
-        gap: 0.5rem;
-        font-weight: 300;
-        font-size: 0.9rem;
-        text-decoration: none;
-        color: var(--bs-body-color);
-        border-bottom: 1px solid var(--border-color);
+		& li {
+			padding: 0 1rem;
+			margin: 0;
+		}
+	}
 
-        & svg {
-            width: auto;
-            height: 18px;
-        }
+	& .sidebar-menu a {
+		width: 100%;
+		height: 40px;
+		padding: 0 0.8rem;
+		align-items: center;
+		display: flex;
+		gap: 0.5rem;
+		font-weight: 300;
+		font-size: 0.9rem;
+		text-decoration: none;
+		color: var(--bs-body-color);
+		border-bottom: 1px solid var(--border-color);
 
-        & span {
-            text-transform: uppercase;
-            line-height: 1;
-        }
+		& svg {
+			width: auto;
+			height: 18px;
+		}
 
-        &:hover {
-            color: var(--sidebar-hover-color);
-            font-weight: 600;
-        }
+		& span {
+			text-transform: uppercase;
+			line-height: 1;
+		}
 
-    }
+		&:hover {
+			color: var(--sidebar-hover-color);
+			font-weight: 600;
+		}
+	}
 }
 
 .sidebar .dropdown {
-    & img {
-        width: 25px;
-        height: auto;
-    }
+	.btn {
+		min-width: 160px;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	& img {
+		width: 25px;
+		height: auto;
+	}
 }
 
 .sidebar-logo {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    text-transform: uppercase;
-    cursor: pointer;
+	width: 100%;
+	height: 80px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	text-transform: uppercase;
+	cursor: pointer;
 
-    &:hover {
-        color: var(--sidebar-hover-color);
-    }
+	&:hover {
+		color: var(--sidebar-hover-color);
+	}
 }

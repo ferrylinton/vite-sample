@@ -1,33 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html translate="no" lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" crossorigin href="/assets/css/main.css">
+  <%- include('./partials/head', {title: "Todo App With Bootstrap" }); %>
 </head>
 
 <body>
-
-    <section>
-        <h2>Theme color</h2>
-        <article class="color-picker component" aria-label="Custom theme example">
-            <hgroup>
-                <h2>Azure</h2>
-                <p>Form example with an azure theme.</p>
-            </hgroup>
-            <form>
-                <fieldset class="grid"><input placeholder="Login" aria-label="Login" autocomplete="username" type="text"
-                        name="login"><input placeholder="Password" aria-label="Password" autocomplete="current-password"
-                        type="password" name="password"><button type="submit">Log in</button></fieldset>
-                <fieldset><label><input role="switch" type="checkbox" checked="" name="switch"> I agree to the <a
-                            data-discover="true" href="/docs/version-picker">Privacy Policy</a></label></fieldset>
-            </form>
-            
-        </article>
-    </section>
-
-    <script type="module" src="/assets/js/main.js"></script>
+  <%- include('./partials/sidebar'); %>
+  <main>
+    <div class="page-container">
+      <section class="d-flex justify-content-center align-items-end gap-2 mt-2 mb-4">
+        <h2 class="title">
+          <%- include('./icons/about-icon'); %>
+          <span>
+            <%= t('about') %>
+          </span>
+        </h2>
+      </section>
+    </div>
+  </main>
 </body>
 
 </html>

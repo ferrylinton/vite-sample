@@ -78,7 +78,7 @@ export const createTodo = async (task: string) => {
  * @param {boolean} updateData.done - The task status
  * @returns Object of {@link UpdateResult}.
  */
-export const updateTodo= async (id: string, task: string, done: boolean = true) => {
+export const updateTodo = async (id: string, task: string, done: boolean = true) => {
 	const todoCollection = await getCollection<Todo>(TODO_COLLECTION);
 	const updatedAt = new Date();
 	return await todoCollection.updateOne(

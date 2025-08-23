@@ -1,4 +1,4 @@
-import { ValidationError } from "./common-type";
+import { ValidationError } from './common-type';
 
 export type Role = 'ADMIN' | 'USER';
 

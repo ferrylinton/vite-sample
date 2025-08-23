@@ -1,0 +1,14 @@
+<div class="form-check">
+	<% if (todo.done) { %>
+	<input
+		class="form-check-input"
+		type="checkbox"
+		id="<%= todo.id %>"
+		value="<%= todo.done %>"
+		checked
+	/>
+	<% } else { %>
+	<input class="form-check-input" type="checkbox" id="<%= todo.id %>" value="<%= todo.done %>" />
+	<% } %>
+	<label class="form-check-label" for="<%= todo.id %>"></label>
+</div>

@@ -9,7 +9,6 @@ import {
 } from 'mongodb';
 import { serverLogger } from '@/config/winston-config';
 
-
 const mongoClientOptions: MongoClientOptions = {
 	authMechanism: 'DEFAULT',
 	authSource: constant.MONGODB_AUTH_SOURCE,

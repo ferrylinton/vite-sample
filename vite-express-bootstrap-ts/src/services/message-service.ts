@@ -1,10 +1,10 @@
-import constant from "@/config/env-constant";
-import { getCollection } from "@/config/mongodb-config";
-import { logger } from "@/config/winston-config";
-import { Pageable } from "@/types/common-type";
-import { Message } from "@/types/message-type";
-import { mapToObject } from "@/utils/json-util";
-import { DeleteResult, ObjectId, UpdateResult, WithId } from "mongodb";
+import constant from '@/config/env-constant';
+import { getCollection } from '@/config/mongodb-config';
+import { logger } from '@/config/winston-config';
+import { Pageable } from '@/types/common-type';
+import { Message } from '@/types/message-type';
+import { mapToObject } from '@/utils/json-util';
+import { DeleteResult, ObjectId, UpdateResult, WithId } from 'mongodb';
 
 export const MESSAGE_COLLECTION = 'messages';
 

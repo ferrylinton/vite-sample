@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html translate="no" lang="en">
+	<head>
+		<%- include('./partials/head', {title: "Todo App With Bootstrap" }); %>
+	</head>
 
-<head>
-  <%- include('./partials/meta'); -%>
-    <title>Preview • Pico CSS</title>
-    <link rel="stylesheet" href="/assets/css/main.css" />
-</head>
+	<body>
+		<%- include('./partials/sidebar'); -%>
+		<main>
+			<h1>main</h1>
+		</main>
 
-<body>
-  <%- include('./partials/sidebar'); -%>
-    <main>
-      <h1>main</h1>
-    </main>
-
-    <!-- ./ Modal example -->
-    <script type="module" src="/assets/js/main.js"></script>
-</body>
-
+		<!-- ./ Modal example -->
+		<script type="module" src="/assets/js/main.js"></script>
+	</body>
 </html>

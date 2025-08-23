@@ -1,74 +1,74 @@
 <!DOCTYPE html>
 <html translate="no" lang="en">
+	<head>
+		<%- include('../partials/head', {title: "Todo App With Bootstrap" }); %>
+	</head>
 
-<head>
-  <%- include('../partials/meta'); -%>
-    <title>Preview • Pico CSS</title>
-</head>
+	<body>
+		<%- include('../partials/sidebar'); -%>
+		<main>
+			<div class="todoes">
+				<section class="d-flex justify-content-center align-items-end gap-2 mt-2 mb-4">
+					<h2 class="title">
+						<%- include('../icons/tasks-icon'); %>
+						<span>
+							<%= t('detail') %>
+						</span>
+					</h2>
+				</section>
 
-<body>
-  <%- include('../partials/sidebar'); -%>
-    <main>
-      <div class="todoes">
+				<table class="table table-striped border detail">
+					<tbody>
+						<tr>
+							<th>ID</th>
+							<td>
+								<%= todo.id %>
+							</td>
+						</tr>
+						<tr>
+							<th>Task</th>
+							<td>
+								<span class="text-break"> <%= todo.task %> </span>
+							</td>
+						</tr>
+						<tr>
+							<th>Done</th>
+							<td>
+								<%= todo.done ? 'Yes' : 'No' %>
+							</td>
+						</tr>
+						<tr>
+							<th>Created At</th>
+							<td data-convertToDate>
+								<%= todo.createdAt %>
+							</td>
+						</tr>
+						<tr>
+							<th>Updated At</th>
+							<td data-convertToDate>
+								<%= todo.updatedAt %>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 
-        <section class="d-flex justify-content-center align-items-end gap-2 mt-2 mb-4">
-          <h2 class="title">
-            <%- include('../icons/tasks-icon'); %>
-              <span>Detail</span>
-          </h2>
-        </section>
-
-        <table class="table table-striped border detail">
-          <tbody>
-            <tr>
-              <th>ID</th>
-              <td>
-                <%= todo.id %>
-              </td>
-            </tr>
-            <tr>
-              <th>Task</th>
-              <td>
-                <span class="text-break"><%= todo.task %></span>
-              </td>
-            </tr>
-            <tr>
-              <th>Done</th>
-              <td>
-                <%= todo.done ? 'Yes' : 'No' %>
-              </td>
-            </tr>
-            <tr>
-              <th>Created At</th>
-              <td data-convertToDate>
-                <%= todo.createdAt %>
-              </td>
-            </tr>
-            <tr>
-              <th>Updated At</th>
-              <td data-convertToDate>
-                <%= todo.updatedAt %>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="d-flex gap-2">
-          <a href="/" role="button" class="btn btn-secondary">
-            <%- include('../icons/previous-icon'); -%>
-              <span>Back</span>
-          </a>
-          <button type="button" class="btn btn-danger" data-delete="<%= todo.id %>">
-            <%- include('../icons/delete-icon'); -%>
-              <span>Delete</span>
-          </button>
-        </div>
-
-      </div>
-
-    </main>
-    <%- include('../partials/confirm', {message: 'Delete data?'}); %>
-    <script type="module" src="/src/assets/js/main.ts?t=<%= new Date().getTime() %>"></script>
-</body>
-
+				<div class="d-flex gap-2">
+					<a href="/" role="button" class="btn btn-secondary btn-icon">
+						<%- include('../icons/previous-icon'); -%>
+						<span><%= t('back') %></span>
+					</a>
+					<button
+						type="button"
+						class="btn btn-danger btn-icon"
+						data-delete="<%= todo.id %>"
+					>
+						<%- include('../icons/delete-icon'); -%>
+						<span><%= t('delete') %></span>
+					</button>
+				</div>
+			</div>
+		</main>
+		<%- include('../partials/confirm', {message: t('deleteData') }); %>
+		<script type="module" src="/src/assets/js/main.ts?t=<%= new Date().getTime() %>"></script>
+	</body>
 </html>

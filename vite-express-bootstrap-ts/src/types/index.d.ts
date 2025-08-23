@@ -1,7 +1,7 @@
 export {};
 
 declare global {
-    interface Window {
-        toast: () => void
-    }
+	interface Window {
+		toast: () => void;
+	}
 }
