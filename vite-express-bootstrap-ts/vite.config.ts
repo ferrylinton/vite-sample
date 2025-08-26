@@ -45,6 +45,7 @@ export default defineConfig(__config => {
 			hmr: {
 				host: 'localhost',
 			},
+			
 		},
 		plugins: [ejsBuilder(hash)],
 	};

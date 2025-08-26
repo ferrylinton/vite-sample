@@ -17,8 +17,30 @@
           </span>
         </h2>
       </section>
+      <form class="needs-validation" method="post" action="/messages/create" autocomplete="off">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+        </div>
+        <div class="d-flex gap-2 my-4">
+          <button type="reset" class="btn btn-secondary btn-icon">
+            <%- include('../icons/reload-icon'); -%>
+            <span><%= t('reset') %></span>
+          </button>
+          <button type="submit" class="btn btn-primary btn-icon">
+            <%- include('../icons/send-icon'); -%>
+            <span><%= t('send') %></span>
+          </button>
+        </div>
+      </form>
     </div>
   </main>
+
+  <script type="module" src="/src/assets/js/main.ts?t=<%= new Date().getTime() %>"></script>
 </body>
 
 </html>

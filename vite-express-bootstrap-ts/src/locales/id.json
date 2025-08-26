@@ -30,5 +30,10 @@
 	"dataIsDeleted": "Data berhasil dihapus",
 	"list": "Daftar",
 	"create": "Tambah",
-	"confirm": "Konfirm"
+	"confirm": "Konfirm",
+	"aboutDescription": "Aplikasi Web Todo Sederhana yang juga merupakan boilerplate yang  siap digunakan untuk membangun web applikasi dengan Express, Mongodb, EJS, Bootstrap dan TypeScript.",
+	"aboutBuiltWith": "Dibangun dengan",
+	"reset": "Ulang",
+	"send": "Kirim",
+	"500": "Oops, ada kesalahan di server"
 }

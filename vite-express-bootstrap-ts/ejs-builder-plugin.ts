@@ -94,6 +94,19 @@ export const ejsBuilder = (hash: string): PluginOption => {
 					}
 				});
 			},
+
+			handleHotUpdate({ file, server }) {
+				if (file.endsWith('.json')) {
+					console.log('reloading json file...');
+					server.restart();
+				}else{
+					server.ws.send({
+						type: 'full-reload',
+						path: '*'
+					});
+				}
+			},
+
 		},
 		{
 			name: 'ejs-builder-plugin:build',

@@ -20,31 +20,31 @@
 				<table class="table table-striped border detail">
 					<tbody>
 						<tr>
-							<th>ID</th>
+							<th><%= t('id') %></th>
 							<td>
 								<%= todo.id %>
 							</td>
 						</tr>
 						<tr>
-							<th>Task</th>
+							<th><%= t('task') %></th>
 							<td>
 								<span class="text-break"> <%= todo.task %> </span>
 							</td>
 						</tr>
 						<tr>
-							<th>Done</th>
+							<th><%= t('done') %></th>
 							<td>
-								<%= todo.done ? 'Yes' : 'No' %>
+								<%= todo.done ? t('yes') : t('no') %>
 							</td>
 						</tr>
 						<tr>
-							<th>Created At</th>
+							<th><%= t('createdAt') %></th>
 							<td data-convertToDate>
 								<%= todo.createdAt %>
 							</td>
 						</tr>
 						<tr>
-							<th>Updated At</th>
+							<th><%= t('updatedAt') %></th>
 							<td data-convertToDate>
 								<%= todo.updatedAt %>
 							</td>
@@ -52,7 +52,7 @@
 					</tbody>
 				</table>
 
-				<div class="d-flex gap-2">
+				<div class="d-flex gap-2 my-4">
 					<a href="/" role="button" class="btn btn-secondary btn-icon">
 						<%- include('../icons/previous-icon'); -%>
 						<span><%= t('back') %></span>

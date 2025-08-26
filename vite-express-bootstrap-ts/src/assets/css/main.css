@@ -1,5 +1,6 @@
 @import './theme-toggle.css';
 @import './sidebar.css';
+@import './about.css';
 
 body {
 	display: flex;
@@ -24,6 +25,8 @@ main {
 	display: flex;
 	justify-content: center;
 	align-items: flex-start;
+	height: 100dvh;
+	overflow: auto;
 }
 
 .title {
@@ -33,11 +36,12 @@ main {
 	align-items: center;
 	gap: 0.5rem;
 	margin: 1rem 0 2rem 0;
+	opacity: 0.8;
 
 	& span {
 		text-transform: uppercase;
 		font-size: 1.5rem;
-		font-weight: 200;
+		font-weight: bold;
 		line-height: 1;
 	}
 
@@ -52,10 +56,10 @@ main {
 		left: 0;
 		right: 0;
 		top: 100%;
-		margin: 5px auto;
-		width: 80%;
-		height: 0.08rem;
-		background: var(--bs-secondary);
+		margin: 8px auto;
+		width: 100%;
+		height: 0.2rem;
+		background: var(--bs-body-color);
 		opacity: 0.9;
 	}
 }
@@ -77,6 +81,7 @@ main {
 	}
 
 	& table.list {
+
 		& tbody td {
 			padding: 0.4rem 0.5rem;
 		}
@@ -96,10 +101,6 @@ main {
 					width: auto;
 				}
 			}
-		}
-
-		& tbody tr:last-child td {
-			border-bottom: none;
 		}
 
 		& tr[data-done='true'] span {
@@ -189,62 +190,7 @@ main {
 	max-width: 500px;
 }
 
-.author{
-    width: 100%;
-    height: 100%;
-    min-height: 500px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-}
+@media (min-width: 576px) {
 
-.author-image {
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    border: solid 3px hsla(var(--inverse-text-h), var(--inverse-text-s), 100%, 1);
-    box-shadow: 0 0 20px 0 hsla(var(--inverse-text-h), var(--inverse-text-s), 70%, 1);
-}
 
-.author-message {
-    margin-top: 1rem;
-    font-size: 1rem;
-    color: hsl(var(--primary-h), var(--primary-s), 90%, 1);
-}
-
-.author-name {
-    font-family: "Permanent Marker", cursive;
-    font-size: 1.8rem;
-    color: var(--accent);
-    line-height: 1;
-    text-shadow: 1px 1px 1px hsla(var(--inverse-text-h), var(--inverse-text-s), 0%, 1);
-}
-
-.author-title {
-    font-size: 1.3rem;
-    font-weight: bold;
-    text-shadow: 1px 1px 1px hsla(var(--inverse-text-h), var(--inverse-text-s), 0%, 1);
-}
-
-.author-info {
-    margin-top: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.author-info-item {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-}
-
-.author-info-item svg {
-    width: 20px;
-    height: 20px;
 }

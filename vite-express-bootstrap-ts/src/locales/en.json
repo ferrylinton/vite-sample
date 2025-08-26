@@ -30,5 +30,10 @@
 	"dataIsDeleted": "Data is deleted",
 	"list": "List",
 	"create": "Create",
-	"confirm": "Confirm"
+	"confirm": "Confirm",
+	"aboutDescription": "A Simple Todo Web Application which is also a boilerplate that is ready to be used to build web applications with Express, Mongodb, EJS, Bootstrap and Typescript.",
+	"aboutBuiltWith": "Built with",
+	"reset": "Reset",
+	"send": "Send",
+	"500": "Oops, there was an error on the server"
 }
