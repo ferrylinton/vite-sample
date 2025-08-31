@@ -35,5 +35,19 @@
 	"aboutBuiltWith": "Built with",
 	"reset": "Reset",
 	"send": "Send",
-	"500": "Oops, there was an error on the server"
+	"500": "Oops, there was an error on the server",
+	"email": "Email",
+	"message": "Message",
+	"captcha": "Captcha",
+	"captchaIsNotMatch": "Captcha is not match",
+	"captchaIsExpired": "Captcha is expired",
+	"reload": "Reload",
+	"loginAttempt": "Login Attempt",
+	"invalidUsername": "Username min 4 and max 30 characters",
+	"invalidPassword": "Password min 6 and max 30 characters",
+	"invalidPasswordConfirm": "Confirm Password min 6 and max 30 characters",
+	"invalidEmail": "Invalid email",
+	"invalidMessage": "Message min 20 and max 1000 characters",
+	"invalidCaptcha": "Capthca must be 5 characters"
+
 }

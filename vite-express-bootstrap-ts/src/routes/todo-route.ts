@@ -1,5 +1,5 @@
 import { MESSAGE } from '@/config/app-constant';
-import constant from '@/config/env-constant';
+import { TOAST_COOKIE_MAX_AGE } from '@/config/env-constant';
 import {
 	countTodoes,
 	createTodo,
@@ -23,7 +23,7 @@ const viewListHandler = async (req: Request, res: Response, next: NextFunction) 
 		res.render('todoes/todo-list', {
 			todoes,
 			total,
-			message,
+			message
 		});
 	} catch (error) {
 		next(error);
@@ -65,15 +65,15 @@ const createTodoHandler = async (req: Request, res: Response, next: NextFunction
 				let task = req.body.task;
 				await createTodo(task);
 				res.cookie(MESSAGE, res.t('dataIsCreated', task), {
-					maxAge: constant.TOAST_COOKIE_MAX_AGE,
+					maxAge: TOAST_COOKIE_MAX_AGE,
 					httpOnly: true,
 				});
 				res.redirect('/');
 			} else {
 				const errorValidations = treeifyError(validation.error).properties;
-				console.log(errorValidations);
 				res.render('todoes/todo-create', {
 					errorValidations,
+					formData: req.body
 				});
 			}
 		}
@@ -124,7 +124,7 @@ const deleteTodoHandler = async (req: Request, res: Response, next: NextFunction
 		if (current) {
 			await deleteTodoById(id);
 			res.cookie(MESSAGE, res.t('dataIsDeleted', current.task), {
-				maxAge: 3000,
+				maxAge: TOAST_COOKIE_MAX_AGE,
 				httpOnly: true,
 			});
 		}
@@ -144,7 +144,7 @@ const toggleStatusHandler = async (req: Request, res: Response, next: NextFuncti
 			await updateTodo(id, current.task, !current.done);
 			res.locals.message = 'Data is updated';
 			res.cookie(MESSAGE, res.t('dataIsUpdated', current.task), {
-				maxAge: 3000,
+				maxAge: TOAST_COOKIE_MAX_AGE,
 				httpOnly: true,
 			});
 		}

@@ -1,9 +1,9 @@
-import constant from '@/config/env-constant';
 import { getCollection } from '@/config/mongodb-config';
 import { logger } from '@/config/winston-config';
 import { Pageable } from '@/types/common-type';
 import { Message } from '@/types/message-type';
 import { mapToObject } from '@/utils/json-util';
+import { PAGE_SIZE } from '@/utils/pagination-util';
 import { DeleteResult, ObjectId, UpdateResult, WithId } from 'mongodb';
 
 export const MESSAGE_COLLECTION = 'messages';
@@ -18,7 +18,7 @@ export const findMessages = async (keyword: string | null, page: number) => {
 		},
 		{
 			$project: {
-				content: 0,
+				message: 0,
 			},
 		},
 		{
@@ -30,10 +30,10 @@ export const findMessages = async (keyword: string | null, page: number) => {
 			$facet: {
 				data: [
 					{
-						$skip: (page - 1) * constant.PAGE_SIZE,
+						$skip: (page - 1) * PAGE_SIZE,
 					},
 					{
-						$limit: constant.PAGE_SIZE,
+						$limit: PAGE_SIZE,
 					},
 				],
 				pagination: [
@@ -51,7 +51,7 @@ export const findMessages = async (keyword: string | null, page: number) => {
 	if (keyword) {
 		const regex = new RegExp(keyword, 'i');
 		pipeline[0]['$match'] = {
-			$or: [{ email: regex }, { content: regex }],
+			$or: [{ email: regex }, { message: regex }],
 		};
 
 		logger.info('POST.find : ' + JSON.stringify(pipeline).replaceAll('{}', regex.toString()));
@@ -68,12 +68,12 @@ export const findMessages = async (keyword: string | null, page: number) => {
 		}
 
 		arr[0].pagination.page = page;
-		arr[0].pagination.totalPage = Math.ceil(arr[0].pagination.total / constant.PAGE_SIZE);
-		arr[0].pagination.pageSize = constant.PAGE_SIZE;
+		arr[0].pagination.totalPage = Math.ceil(arr[0].pagination.total / PAGE_SIZE);
+		arr[0].pagination.pageSize = PAGE_SIZE;
 
-		arr[0].data = arr[0].data.map(postLog => {
-			postLog.id = postLog._id.toHexString();
-			return postLog;
+		arr[0].data = arr[0].data.map(message => {
+			message.id = message._id.toHexString();
+			return message;
 		});
 
 		return arr[0] as Pageable<Message>;
@@ -106,12 +106,12 @@ export const findMessageById = async (id: string): Promise<Message | null> => {
 	return null;
 };
 
-export const createMessage = async ({ email, content }: Omit<Message, 'id'>): Promise<Message> => {
+export const createMessage = async ({ email, message }: Omit<Message, 'id'>): Promise<Message> => {
 	const messageCollection = await getCollection<Omit<Message, 'id'>>(MESSAGE_COLLECTION);
 
 	const newMessage = {
 		email,
-		content,
+		message,
 		viewed: false,
 		createdAt: new Date(),
 	};

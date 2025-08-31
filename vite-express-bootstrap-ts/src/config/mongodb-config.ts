@@ -1,4 +1,5 @@
-import constant from '@/config/env-constant';
+import { MONGODB_AUTH_SOURCE, MONGODB_DATABASE, MONGODB_PASSWORD, MONGODB_URL, MONGODB_USERNAME } from '@/config/env-constant';
+import { serverLogger } from '@/config/winston-config';
 import {
 	ConnectionPoolMonitoringEvent,
 	Db,
@@ -7,17 +8,16 @@ import {
 	type MongoClientOptions,
 	type TransactionOptions,
 } from 'mongodb';
-import { serverLogger } from '@/config/winston-config';
 
 const mongoClientOptions: MongoClientOptions = {
 	authMechanism: 'DEFAULT',
-	authSource: constant.MONGODB_AUTH_SOURCE,
+	authSource: MONGODB_AUTH_SOURCE,
 	monitorCommands: true,
 	connectTimeoutMS: 15000,
 	socketTimeoutMS: 15000,
 	auth: {
-		username: constant.MONGODB_USERNAME,
-		password: constant.MONGODB_PASSWORD,
+		username: MONGODB_USERNAME,
+		password: MONGODB_PASSWORD,
 	},
 };
 
@@ -43,7 +43,7 @@ const log = (event: ConnectionPoolMonitoringEvent) => {
 };
 
 const getMongoClientInstance = () => {
-	const instance = new MongoClient(constant.MONGODB_URL, mongoClientOptions);
+	const instance = new MongoClient(MONGODB_URL, mongoClientOptions);
 
 	instance.on('connectionPoolCreated', log);
 
@@ -72,7 +72,7 @@ export const getMongoClient = async () => {
 
 export const getDb = async () => {
 	const connection = await getMongoClient();
-	return connection.db(constant.MONGODB_DATABASE);
+	return connection.db(MONGODB_DATABASE);
 };
 
 export const getCollection = async <TSchema extends Document = Document>(name: string, db?: Db) => {

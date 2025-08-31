@@ -1,6 +1,6 @@
-import constant from '@/config/env-constant';
 import path from 'path';
 import { createLogger, format, transports } from 'winston';
+import { LOGGER_HIDE_CONSOLE, LOGGER_LEVEL } from '@/config/env-constant';
 const { combine, timestamp, printf, errors } = format;
 
 const timestampFormat = timestamp({
@@ -32,7 +32,7 @@ export const logger = createLogger({
 	format: combine(errors({ stack: true })),
 	transports: [
 		new transports.File({
-			level: constant.LOGGER_LEVEL,
+			level: LOGGER_LEVEL,
 			filename: path.join(process.cwd(), 'logs', 'app.log'),
 			handleExceptions: true,
 			maxsize: 5242880, // 5MB
@@ -58,17 +58,17 @@ export const serverLogger = createLogger({
 	exitOnError: false,
 });
 
-if (constant.LOGGER_HIDE_CONSOLE !== 'true') {
+if (LOGGER_HIDE_CONSOLE !== 'true') {
 	logger.add(
 		new transports.Console({
-			level: constant.LOGGER_LEVEL,
+			level: LOGGER_LEVEL,
 			format: combine(format.colorize(), timestampFormat, customFormat),
 		})
 	);
 
 	serverLogger.add(
 		new transports.Console({
-			level: constant.LOGGER_LEVEL,
+			level: LOGGER_LEVEL,
 			format: combine(format.colorize(), timestampFormat, customFormat),
 		})
 	);

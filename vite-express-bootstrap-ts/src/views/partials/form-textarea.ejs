@@ -1,0 +1,7 @@
+<label for="<%= field %>" class="form-label"><%= t(field) %></label>
+<textarea class="<%= (typeof clazz !== 'undefined') ? clazz : 'form-control' %> <%= (typeof errorValidations !== 'undefined' && errorValidations[field]) ? 'is-invalid' : '' %>" id="<%= field %>" name="<%= field %>" placeholder="<%= t(field) %>" maxlength="<%=maxlength%>" autocomplete="off" rows="<%= rows %>"><%= formData[field] %></textarea>
+<% if (typeof errorValidations !== 'undefined' && errorValidations[field]) { %>
+<div class="invalid-feedback">
+  <%= t(errorValidations[field].errors[0]) %>
+</div>
+<% } %>

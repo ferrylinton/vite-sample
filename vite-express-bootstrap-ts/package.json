@@ -10,7 +10,9 @@
 		"start": "cd dist && cross-env NODE_ENV=production node server.js",
 		"start-install": "cd dist && npm install --omit=dev",
 		"format": "prettier . --write",
-		"format:check": "prettier . --check"
+		"format:check": "prettier . --check",
+		"init-db": "tsx ./src/db/init-db.ts",
+		"init-data": "tsx ./src/db/init-db.ts"
 	},
 	"keywords": [
 		"vite",
@@ -22,6 +24,7 @@
 	"description": "Simple Express App with Bootstrap",
 	"dependencies": {
 		"bcryptjs": "^3.0.2",
+		"canvas": "^3.2.0",
 		"compression": "^1.8.1",
 		"cookie-parser": "^1.4.7",
 		"cross-env": "^10.0.0",
@@ -37,6 +40,7 @@
 	},
 	"devDependencies": {
 		"@csstools/postcss-relative-color-syntax": "^3.0.10",
+		"@faker-js/faker": "^9.9.0",
 		"@fullhuman/postcss-purgecss": "^7.0.2",
 		"@popperjs/core": "^2.11.8",
 		"@types/bootstrap": "^5.2.10",

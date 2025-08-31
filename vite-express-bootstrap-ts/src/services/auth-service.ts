@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { findUserByUsername } from './user-service';
+import { LoggedUser } from '@/types/auth-type';
 
 export const authenticate = async (
 	username: string,

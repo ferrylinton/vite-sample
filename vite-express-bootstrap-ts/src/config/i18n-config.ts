@@ -1,13 +1,10 @@
-import constant from '@/config/env-constant';
+import { APP_COOKIE_MAX_AGE, NODE_ENV } from '@/config/env-constant';
 import { QueryParams } from '@/types/express-type';
 import { Express, NextFunction, Request, Response } from 'express';
 import i18n from 'i18n';
-import path from 'path';
+import path, { resolve } from 'path';
 
-const BASE_FOLDER =
-	constant.NODE_ENV === 'production'
-		? path.resolve(process.cwd())
-		: path.resolve(process.cwd(), 'src');
+const BASE_FOLDER = (NODE_ENV === 'production') ? resolve(process.cwd()) : resolve(process.cwd(), 'src');
 
 export const COOKIE_LOCALE = 'locale';
 
@@ -41,7 +38,7 @@ export const i18nConfig = (app: Express) => {
 	app.use((req: Request<{}, {}, {}, QueryParams>, res: Response, next: NextFunction) => {
 		if (req.cookies.locale === undefined) {
 			res.cookie(COOKIE_LOCALE, req.getLocale(), {
-				maxAge: constant.APP_COOKIE_MAX_AGE,
+				maxAge: APP_COOKIE_MAX_AGE,
 				httpOnly: true,
 			});
 		}
@@ -49,7 +46,7 @@ export const i18nConfig = (app: Express) => {
 		if (req.query.locale) {
 			i18n.setLocale(req.query.locale);
 			res.cookie(COOKIE_LOCALE, req.getLocale(), {
-				maxAge: constant.APP_COOKIE_MAX_AGE,
+				maxAge: APP_COOKIE_MAX_AGE,
 				httpOnly: true,
 			});
 		}

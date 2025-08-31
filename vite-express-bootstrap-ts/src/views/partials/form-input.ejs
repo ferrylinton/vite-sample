@@ -1,0 +1,7 @@
+<label for="<%= field %>" class="form-label"><%= t(field) %></label>
+<input type="<%= type %>" class="<%= (typeof clazz !== 'undefined') ? clazz : 'form-control' %> <%= (errorValidations[field]) ? 'is-invalid' : '' %>" id="<%= field %>" name="<%= field %>" value="<%= formData[field] %>" placeholder="<%= t(field) %>" maxlength="<%=maxlength%>" autocomplete="off">
+<% if (errorValidations[field]) { %>
+<div class="invalid-feedback">
+  <%= t(errorValidations[field].errors[0]) %>
+</div>
+<% } %>

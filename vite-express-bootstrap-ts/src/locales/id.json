@@ -35,5 +35,17 @@
 	"aboutBuiltWith": "Dibangun dengan",
 	"reset": "Ulang",
 	"send": "Kirim",
-	"500": "Oops, ada kesalahan di server"
+	"500": "Oops, ada kesalahan di server",
+	"email": "Email",
+	"message": "Pesan",
+	"captcha": "Captcha",
+	"captchaIsNotMatch": "Captcha tidak cocok",
+	"captchaIsExpired": "Captcha sudah kadaluarsa",
+	"reload": "Muat Ulang",
+	"invalidUsername": "Nama pengguna min 4 dan maks 30 karakter",
+	"invalidPassword": "Kata sandi min 6 dan maks 30 karakter",
+	"invalidPasswordConfirm": "Konfirmasi kata sandi min 6 dan maks 30 karakter",
+	"invalidEmail": "Email harus valid dan maks 50 karakter",
+	"invalidContactMeMessage": "Pesan min 20 dan maks 1000 karakter",
+	"invalidCaptcha": "Capthca harus 5 karakter"
 }

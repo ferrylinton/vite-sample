@@ -41,7 +41,7 @@ main {
 	& span {
 		text-transform: uppercase;
 		font-size: 1.5rem;
-		font-weight: bold;
+		font-weight: lighter;
 		line-height: 1;
 	}
 
@@ -58,7 +58,7 @@ main {
 		top: 100%;
 		margin: 8px auto;
 		width: 100%;
-		height: 0.2rem;
+		height: 0.1rem;
 		background: var(--bs-body-color);
 		opacity: 0.9;
 	}
@@ -149,31 +149,47 @@ main {
 	min-width: 100px;
 }
 
-.btn-icon {
+.btn:has(.icon) {
 	min-width: 120px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	gap: 0.5rem;
 	text-transform: uppercase;
-	line-height: 1;
-	font-size: 0.9rem;
-	letter-spacing: 1px;
 
-	& span {
-		line-height: 1;
-	}
-
-	& svg {
-		height: 22px;
-		width: auto;
+	& span{
+		display: block;
 	}
 }
 
-.btn-icon.btn-lg svg {
-	height: 28px;
-	width: auto;
-	margin-right: 2px;
+.icon {
+	width: 15px;
+	height: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	& svg {
+		width: 100%;
+		height: auto;
+		display: block;
+	}
+}
+
+.btn-lg{
+
+	--icon-height: 25px;
+	height: 50px;
+	
+	& .icon{
+		width: var(--icon-height);
+		height: var(--icon-height);
+	}
+
+	& span{
+		height: var(--icon-height);
+		line-height: var(--icon-height);
+	}
 }
 
 .table .btn-icon {
@@ -190,7 +206,29 @@ main {
 	max-width: 500px;
 }
 
-@media (min-width: 576px) {
-
-
+.form-control[name=captcha] {
+	width: 100px;
 }
+
+.form-capthca {
+
+	display: flex;
+	gap: 0.5rem;
+
+	& img {
+		height: 60px;
+	}
+
+	& button {
+		width: 60px;
+		height: 60px;
+		padding: 0;
+	}
+
+	& svg {
+		height: 40px;
+		width: auto;
+	}
+}
+
+@media (min-width: 576px) {}

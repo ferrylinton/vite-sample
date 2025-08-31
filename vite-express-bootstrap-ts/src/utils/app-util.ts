@@ -1,4 +1,4 @@
-import constant from '@/config/env-constant';
+import { APP_COOKIE_MAX_AGE } from '@/config/env-constant';
 import { COOKIE_LOCALE, DEFAULT_LOCALE, LOCALES } from '@/config/i18n-config';
 import { logger } from '@/config/winston-config';
 import { QueryParams } from '@/types/express-type';
@@ -23,13 +23,13 @@ export const initTheme = (req: Request<{}, {}, {}, QueryParams>, res: Response) 
 	try {
 		if (req.query.theme && THEMES.includes(req.query.theme)) {
 			res.cookie(COOKIE_THEME, req.query.theme, {
-				maxAge: constant.APP_COOKIE_MAX_AGE,
+				maxAge: APP_COOKIE_MAX_AGE,
 				httpOnly: true,
 			});
 			res.locals.theme = req.query.theme;
 		} else if (req.cookies[COOKIE_THEME] === undefined) {
 			res.cookie(COOKIE_THEME, DEFAULT_THEME, {
-				maxAge: constant.APP_COOKIE_MAX_AGE,
+				maxAge: APP_COOKIE_MAX_AGE,
 				httpOnly: true,
 			});
 			res.locals.theme = DEFAULT_THEME;
@@ -53,7 +53,7 @@ export const initVariant = (req: Request<{}, {}, {}, QueryParams>, res: Response
 		}
 
 		res.cookie(COOKIE_VARIANT, variantName, {
-			maxAge: constant.APP_COOKIE_MAX_AGE,
+			maxAge: APP_COOKIE_MAX_AGE,
 			httpOnly: true,
 		});
 		const arr = variants.filter(variant => variant.name === variantName);
@@ -67,13 +67,13 @@ export const initLocale = (req: Request<{}, {}, {}, QueryParams>, res: Response)
 	try {
 		if (req.query.locale && LOCALES.includes(req.query.locale)) {
 			res.cookie(COOKIE_LOCALE, req.query.locale, {
-				maxAge: constant.APP_COOKIE_MAX_AGE,
+				maxAge: APP_COOKIE_MAX_AGE,
 				httpOnly: true,
 			});
 			res.locals.locale = req.query.locale;
 		} else if (req.cookies[COOKIE_LOCALE] === undefined) {
 			res.cookie(COOKIE_LOCALE, DEFAULT_LOCALE, {
-				maxAge: constant.APP_COOKIE_MAX_AGE,
+				maxAge: APP_COOKIE_MAX_AGE,
 				httpOnly: true,
 			});
 			res.locals.locale = DEFAULT_LOCALE;
