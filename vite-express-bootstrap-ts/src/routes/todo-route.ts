@@ -1,5 +1,6 @@
 import { MESSAGE } from '@/config/app-constant';
 import { TOAST_COOKIE_MAX_AGE } from '@/config/env-constant';
+import { logger } from '@/config/winston-config';
 import {
 	countTodoes,
 	createTodo,
@@ -8,6 +9,7 @@ import {
 	findTodoes,
 	updateTodo,
 } from '@/services/todo-service';
+import { autofocus, checboxData, inputTextData } from '@/utils/ejs-form-util';
 import { CreateTodoValidation } from '@/validations/todo-validation';
 import express, { NextFunction, Request, Response } from 'express';
 import { treeifyError } from 'zod';
@@ -56,15 +58,16 @@ const createTodoHandler = async (req: Request, res: Response, next: NextFunction
 
 		if (total >= 20) {
 			res.render('todoes/todo-create', {
-				errorMaxData: 'maxData',
+				formData: req.body,
+				message: res.t('errorMaxData'),
+				messageType: 'error'
 			});
 		} else {
 			const validation = CreateTodoValidation.safeParse(req.body);
 
 			if (validation.success) {
-				let task = req.body.task;
-				await createTodo(task);
-				res.cookie(MESSAGE, res.t('dataIsCreated', task), {
+				await createTodo(validation.data.task);
+				res.cookie(MESSAGE, res.t('dataIsCreated'), {
 					maxAge: TOAST_COOKIE_MAX_AGE,
 					httpOnly: true,
 				});
@@ -72,15 +75,18 @@ const createTodoHandler = async (req: Request, res: Response, next: NextFunction
 			} else {
 				const errorValidations = treeifyError(validation.error).properties;
 				res.render('todoes/todo-create', {
-					errorValidations,
-					formData: req.body
+					formData: req.body, errorValidations
 				});
 			}
 		}
-	} catch (error) {
-		console.log(error);
+	} catch (error: any) {
+		logger.error(error);
+
+		const message = ((error.message as string).includes('duplicate') ? res.t('duplicateData', req.body.task) : error.message)
 		res.render('todoes/todo-create', {
-			error,
+			formData: req.body,
+			message,
+			messageType: 'error'
 		});
 	}
 };
@@ -90,7 +96,7 @@ const viewUpdateHandler = async (req: Request, res: Response, next: NextFunction
 		const id: string = req.params.id;
 		const todo = await findTodoById(id);
 		res.render('todoes/todo-update', {
-			todo,
+			id, formData: todo
 		});
 	} catch (error) {
 		next(error);
@@ -98,21 +104,43 @@ const viewUpdateHandler = async (req: Request, res: Response, next: NextFunction
 };
 
 const updateTodoHandler = async (req: Request, res: Response, next: NextFunction) => {
-	try {
-		const id: string = req.params.id;
-		const current = await findTodoById(id);
+	const id: string = req.params.id;
+	console.log(req.body);
+	console.log(req.locale);
 
-		if (current) {
-			await updateTodo(id, req.body.task, req.body.done === 'true');
-			res.cookie(MESSAGE, res.t('dataIsUpdated', current.task), {
+	try {
+		const validation = CreateTodoValidation.safeParse(req.body);
+
+		if (validation.success) {
+			await updateTodo(id, validation.data.task, req.body.done === 'on');
+			res.cookie(MESSAGE, res.t('dataIsUpdated', validation.data.task), {
 				maxAge: 3000,
 				httpOnly: true,
 			});
+
+			res.redirect('/');
+		} else {
+			const errorValidations = treeifyError(validation.error).properties;
+			res.render('todoes/todo-update', {
+				id, formData: req.body, errorValidations
+			});
 		}
 
-		res.redirect('/');
-	} catch (error) {
-		next(error);
+
+	} catch (error: any) {
+		logger.error(error);
+		const phrase: i18n.TranslateOptions = {
+			phrase: 'duplicateData',
+			locale: req.locale
+		}
+
+		const message = ((error.message as string).includes('duplicate') ? res.t('duplicateData', req.body.task) : error.message)
+		res.render('todoes/todo-update', {
+			id,
+			message,
+			messageType: 'error',
+			formData: req.body
+		});
 	}
 };
 

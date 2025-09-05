@@ -10,7 +10,7 @@ const LockedSchema = z
 	})
 	.transform(value => value === 'true');
 
-export const CreateUserSchema = object({
+export const CreateUserValidation = object({
 	username: string().min(3, 'invalid.username').max(20, 'invalid.username'),
 	email: string().max(50, 'invalid.email').email('invalid.email'),
 	password: string().min(6, 'invalid.password').max(30, 'invalid.password'),
@@ -21,7 +21,7 @@ export const CreateUserSchema = object({
 	message: 'notMatch.passwordConfirm',
 });
 
-export const ChangePasswordSchema = object({
+export const ChangePasswordValidation = object({
 	username: string().min(3, 'invalid.username').max(20, 'invalid.username'),
 	password: string().min(6, 'invalid.password').max(30, 'invalid.password'),
 	passwordConfirm: string().min(6, 'invalid.passwordConfirm').max(30, 'invalid.passwordConfirm'),
@@ -30,7 +30,7 @@ export const ChangePasswordSchema = object({
 	message: 'notMatch.passwordConfirm',
 });
 
-export const UpdateUserSchema = object({
+export const UpdateUserValidation = object({
 	username: string().min(3, 'invalid.username').max(20, 'invalid.username'),
 	email: string().max(50, 'invalid.email').email('invalid.email'),
 	role: RoleTypeSchema,

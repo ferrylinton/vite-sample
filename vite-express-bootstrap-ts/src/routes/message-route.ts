@@ -9,7 +9,7 @@ import { treeifyError } from 'zod';
 
 const viewMessageHandler = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		res.render('messages/message-create', { formData: {}, errorValidations: {} });
+		res.render('messages/message-create');
 	} catch (error) {
 		next(error);
 	}
@@ -23,24 +23,19 @@ const createMessageHandler = async (req: Request, res: Response, next: NextFunct
 			const captchaFromCookies = req.cookies['captcha'];
 
 			if (!captchaFromCookies) {
-
 				return res.render('messages/message-create', {
 					message: res.t("captchaIsExpired"),
-					formData: req.body,
-					errorValidations: {}
+					formData: req.body
 				});
-
 			}
 
 			const plainCaptcha = await decrypt(captchaFromCookies);
-			if (plainCaptcha !== validation.data.captcha) {
 
+			if (plainCaptcha !== validation.data.captcha) {
 				res.render('messages/message-create', {
 					message: res.t("captchaIsNotMatch"),
-					formData: req.body,
-					errorValidations: {}
+					formData: req.body
 				});
-
 			} else {
 				const { message, email } = validation.data;
 				await createMessage({ message, email })
@@ -56,8 +51,7 @@ const createMessageHandler = async (req: Request, res: Response, next: NextFunct
 		} else {
 			const errorValidations = treeifyError(validation.error).properties;
 			res.render('messages/message-create', {
-				errorValidations,
-				formData: req.body
+				formData: req.body, errorValidations
 			});
 		}
 

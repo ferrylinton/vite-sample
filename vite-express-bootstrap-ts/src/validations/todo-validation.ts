@@ -1,5 +1,5 @@
-import { object, string } from 'zod';
+import z from 'zod';
 
-export const CreateTodoValidation = object({
-	task: string().min(3, 'taskMin').max(150, 'taskMax'),
+export const CreateTodoValidation = z.object({
+	task: z.string().min(3, 'taskMin').max(150, 'taskMax'),
 });

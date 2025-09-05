@@ -10,6 +10,7 @@ body {
 }
 
 svg {
+	vertical-align: middle;
 	height: 20px;
 	width: auto;
 	fill: currentColor;
@@ -57,17 +58,17 @@ main {
 		right: 0;
 		top: 100%;
 		margin: 8px auto;
-		width: 100%;
-		height: 0.1rem;
+		width: 80%;
+		height: 0.05rem;
 		background: var(--bs-body-color);
-		opacity: 0.9;
+		opacity: 0.5;
 	}
 }
 
 .todoes {
 	width: 100%;
 	max-width: 500px;
-	--checkbox-height: 25px;
+	--td-height: 25px;
 
 	& .form-check {
 		padding: 0;
@@ -75,8 +76,8 @@ main {
 	}
 
 	& .form-check-input {
-		width: var(--checkbox-height);
-		height: var(--checkbox-height);
+		width: var(--td-height);
+		height: var(--td-height);
 		margin: 0;
 	}
 
@@ -97,7 +98,7 @@ main {
 
 			& [class^='link'] {
 				& svg {
-					height: var(--checkbox-height);
+					height: var(--td-height);
 					width: auto;
 				}
 			}
@@ -109,12 +110,12 @@ main {
 
 		& span {
 			display: inline-block;
-			line-height: var(--checkbox-height);
+			line-height: var(--td-height);
 		}
 	}
 
 	& table.detail {
-		--checkbox-height: 25px;
+		--td-height: 25px;
 
 		& tbody td,
 		& tbody th {
@@ -151,14 +152,16 @@ main {
 
 .btn:has(.icon) {
 	min-width: 120px;
+	min-height: 38px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	gap: 0.5rem;
 	text-transform: uppercase;
 
-	& span{
+	& span {
 		display: block;
+		line-height: 1;
 	}
 }
 
@@ -176,30 +179,18 @@ main {
 	}
 }
 
-.btn-lg{
+.btn-lg {
 
-	--icon-height: 25px;
+	--icon-height: 24px;
 	height: 50px;
-	
-	& .icon{
+	padding: 0;
+
+	& .icon {
 		width: var(--icon-height);
 		height: var(--icon-height);
 	}
-
-	& span{
-		height: var(--icon-height);
-		line-height: var(--icon-height);
-	}
 }
 
-.table .btn-icon {
-	padding: 2px 5px;
-
-	& svg {
-		height: 26px;
-		width: auto;
-	}
-}
 
 .page-container {
 	width: 100%;

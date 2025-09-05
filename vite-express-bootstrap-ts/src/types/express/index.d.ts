@@ -1,5 +1,5 @@
 // to make the file a module and avoid the TypeScript error
-export {};
+export { };
 
 declare global {
 	namespace Express {
@@ -12,6 +12,7 @@ declare global {
 		}
 		interface Response {
 			t(phraseOrOptions: string | i18n.TranslateOptions, ...replace: string[]): string;
+			t(phraseOrOptions: string | i18n.TranslateOptions, replacements: i18n.Replacements): string;
 		}
 	}
 }

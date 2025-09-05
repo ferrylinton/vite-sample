@@ -2,49 +2,52 @@
 <html translate="no" lang="en">
 
 <head>
-  <%- include('../partials/head', {title: "Todo App With Bootstrap" }); %>
+  <%- include('./partials/head', {title: "Todo App With Bootstrap" }); %>
 </head>
 
 <body>
-  <%- include('../partials/sidebar'); %>
+  <%- include('./partials/sidebar'); %>
   <main>
     <div class="page-container">
       <section class="d-flex justify-content-center align-items-end gap-2 mt-2 mb-4">
         <h2 class="title">
-          <%- include('../icons/message-icon'); %>
+          <%- include('./icons/register-icon'); %>
           <span>
-            <%= t('message') %>
+            <%= t('register') %>
           </span>
         </h2>
       </section>
-      <form class="needs-validation" method="post" action="/message" autocomplete="off" novalidate>
+      <form class="needs-validation" method="post" action="/register" autocomplete="off" novalidate>
         <div class="mb-3">
-          <%- include('../partials/input-text', { id: "email", maxLength: 150, isAutofocus: true }); -%>
+          <%- include('./partials/form-input', {type: "email", field: "email", maxlength: 50, formData}); %>
+        </div>
+         <div class="mb-3">
+          <%- include('./partials/form-input', {type: "password", field: "password", maxlength: 50, formData}); %>
         </div>
         <div class="mb-3">
-          <%- include('../partials/textarea', { id: "message", maxLength: 1000, rows: 3 }); -%>
+          <%- include('./partials/form-input', {type: "password", field: "passwordConfirm", maxlength: 50, formData}); %>
         </div>
         <div class="mb-3">
-          <%- include('../partials/input-text', { id: "captcha", maxLength: 5 }); -%>
+          <%- include('./partials/form-input', {type: "text", field: "captcha", maxlength: 5, formData}); %>
         </div>
         <div class="form-capthca">
           <img id="captchaImage" class="border rounded p-1" src="/captcha" />
           <button type="button" role="reload-captcha" class="text-secondary text-primary-hover bg-transparent border rounded" onclick="reloadCaptcha()">
-            <%- include('../icons/reload-icon'); -%>
+            <%- include('./icons/reload-icon'); -%>
           </button>
         </div>
         <div class="d-flex gap-2 my-4">
-          <button type="reset" class="btn btn-secondary">
-            <i class="icon" style="width: 18px; height: 18px;">
-              <%- include('../icons/reload-icon'); -%>
+          <button type="reset" class="btn btn-secondary btn-icon">
+            <i class="icon">
+              <%- include('./icons/reload-icon'); -%>
             </i>
             <span><%= t('reset') %></span>
           </button>
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" class="btn btn-primary btn-icon">
             <i class="icon">
-              <%- include('../icons/send-icon'); -%>
+              <%- include('./icons/register-icon'); -%>
             </i>
-            <span><%= t('send') %></span>
+            <span><%= t('register') %></span>
           </button>
         </div>
       </form>
@@ -52,7 +55,7 @@
   </main>
 
   <% if(typeof message !== 'undefined') { %>
-  <%- include('../partials/toast', {message}); %>
+  <%- include('./partials/toast', {message}); %>
   <% } %>
 
   <script>

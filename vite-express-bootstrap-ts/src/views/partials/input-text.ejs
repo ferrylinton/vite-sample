@@ -1,0 +1,16 @@
+<% 
+  locals.formData = locals.formData || {};
+  locals.errorValidations = locals.errorValidations || {};
+  locals.maxlength = locals.maxlength || 100;
+  locals.className = 'form-control ' + (locals.className || '') + (errorValidations[id] ? ' is-invalid' : '');
+  let autofocus = (locals.isAutofocus || false) ? 'autofocus' : '';
+%>
+
+
+<label for="<%= id %>" class="form-label"><%= t(id) %></label>
+<input type="text" id="<%= id %>" name="<%= id %>" value="<%= formData[id] %>" maxlength="<%=maxlength%>" placeholder="<%= t(id) %>" class="<%=className%>" autocomplete="off" <%=autofocus%>>
+<% if (typeof errorValidations !== 'undefined' && errorValidations[id]) { %>
+<div class="invalid-feedback">
+  <%= t(errorValidations[id].errors[0]) %>
+</div>
+<% } %>
